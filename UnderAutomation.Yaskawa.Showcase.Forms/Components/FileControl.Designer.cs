@@ -49,6 +49,7 @@
         btnDownloadCmos = new ToolStripButton();
         lblProgress = new Label();
         dlgSaveCMOS = new SaveFileDialog();
+        protocolSelector = new ProtocolSelector();
         ToolStrip1.SuspendLayout();
         tsFolder.SuspendLayout();
         SuspendLayout();
@@ -74,10 +75,10 @@
         lstFolder.Items.AddRange(new ListViewItem[] { listViewItem3, listViewItem4 });
         lstFolder.LabelEdit = true;
         lstFolder.LargeImageList = lstFolderImageList;
-        lstFolder.Location = new Point(0, 50);
+        lstFolder.Location = new Point(0, 80);
         lstFolder.Margin = new Padding(4, 3, 4, 3);
         lstFolder.Name = "lstFolder";
-        lstFolder.Size = new Size(1143, 714);
+        lstFolder.Size = new Size(1143, 684);
         lstFolder.TabIndex = 4;
         lstFolder.UseCompatibleStateImageBehavior = false;
         lstFolder.View = View.Tile;
@@ -86,7 +87,7 @@
         // ToolStrip1
         // 
         ToolStrip1.Items.AddRange(new ToolStripItem[] { toolStripLabel1, cbPattern, btnOpenPath });
-        ToolStrip1.Location = new Point(0, 25);
+        ToolStrip1.Location = new Point(0, 55);
         ToolStrip1.Name = "ToolStrip1";
         ToolStrip1.Size = new Size(1143, 25);
         ToolStrip1.TabIndex = 5;
@@ -119,7 +120,7 @@
         // tsFolder
         // 
         tsFolder.Items.AddRange(new ToolStripItem[] { btnRefresh, btnOpen, btnDownload, btnDelete, btnUpload, toolStripSeparator1, btnBackup, btnDownloadCmos });
-        tsFolder.Location = new Point(0, 0);
+        tsFolder.Location = new Point(0, 30);
         tsFolder.Name = "tsFolder";
         tsFolder.Size = new Size(1143, 25);
         tsFolder.TabIndex = 3;
@@ -200,7 +201,7 @@
         lblProgress.BackColor = SystemColors.ControlLight;
         lblProgress.BorderStyle = BorderStyle.FixedSingle;
         lblProgress.Font = new Font("Microsoft Sans Serif", 12F);
-        lblProgress.Location = new Point(351, 84);
+        lblProgress.Location = new Point(348, 130);
         lblProgress.Margin = new Padding(4, 0, 4, 0);
         lblProgress.Name = "lblProgress";
         lblProgress.Size = new Size(323, 167);
@@ -215,6 +216,14 @@
         dlgSaveCMOS.Filter = "All files|*.*";
         dlgSaveCMOS.Title = "Save CMOS.BIN";
         // 
+        // protocolSelector
+        // 
+        protocolSelector.Dock = DockStyle.Top;
+        protocolSelector.Location = new Point(0, 0);
+        protocolSelector.Name = "protocolSelector";
+        protocolSelector.Size = new Size(1143, 30);
+        protocolSelector.TabIndex = 27;
+        // 
         // FileControl
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -223,6 +232,7 @@
         Controls.Add(lstFolder);
         Controls.Add(ToolStrip1);
         Controls.Add(tsFolder);
+        Controls.Add(protocolSelector);
         Margin = new Padding(4, 3, 4, 3);
         Name = "FileControl";
         Size = new Size(1143, 764);
@@ -253,4 +263,5 @@
     private ToolStripSeparator toolStripSeparator1;
     internal ToolStripButton btnDownloadCmos;
     private SaveFileDialog dlgSaveCMOS;
+    private ProtocolSelector protocolSelector;
 }

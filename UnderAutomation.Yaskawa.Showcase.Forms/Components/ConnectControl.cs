@@ -1,4 +1,5 @@
 ﻿using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.HostControl;
 using UnderAutomation.Yaskawa.License;
 
 public partial class ConnectControl : UserControl, IUserControl
@@ -17,6 +18,15 @@ public partial class ConnectControl : UserControl, IUserControl
 
         chkHSES.Checked = parameters.HighSpeedEServer.Enable;
 
+        chkHostControlEthernet.Checked = parameters.HostControlEthernet.Enable;
+        chkHostControlSerial.Checked = parameters.HostControlSerial.Enable;
+        cbComPorts.Text = parameters.HostControlSerial.PortName;
+        chkEthernetServer.Checked = parameters.EServer.Enable;
+        chkHttp.Checked = parameters.Http.Enable;
+
+        chkFtp.Checked = parameters.Ftp.Enable;
+        cbFtpUser.Text = parameters.Ftp.FtpUser;
+        txtFtpPassword.Text = parameters.Ftp.FtpPassword;
     }
 
 
@@ -53,9 +63,18 @@ public partial class ConnectControl : UserControl, IUserControl
     {
         if (e is KeyEventArgs && ((KeyEventArgs)e).KeyCode != Keys.Enter) return;
         var parameters = new ConnectParameters();
-        
+
         parameters.IP = txtIP.Text;
         parameters.HighSpeedEServer.Enable = chkHSES.Checked;
+        parameters.HostControlEthernet.Enable = chkHostControlEthernet.Checked;
+        parameters.HostControlSerial.Enable = chkHostControlSerial.Checked;
+        parameters.HostControlSerial.PortName = cbComPorts.Text;
+        parameters.EServer.Enable = chkEthernetServer.Checked;
+        parameters.Http.Enable = chkHttp.Checked;
+
+        parameters.Ftp.Enable = chkFtp.Checked;
+        parameters.Ftp.FtpUser = cbFtpUser.Text;
+        parameters.Ftp.FtpPassword = txtFtpPassword.Text;
 
         // Store information
         Config.Current.ConnectParameters = parameters;
@@ -79,9 +98,34 @@ public partial class ConnectControl : UserControl, IUserControl
         _robot.Disconnect();
     }
 
+
+    private void cbComPorts_DropDown(object sender, EventArgs e)
+    {
+        string selected = cbComPorts.Text;
+
+        string[] ports = HostControlSerialClient.GetPortNames();
+        cbComPorts.Items.Clear();
+
+        if (!string.IsNullOrWhiteSpace(selected) && !ports.Contains(selected))
+            cbComPorts.Items.Add(selected);
+
+        cbComPorts.Items.AddRange(ports);
+
+        cbComPorts.Text = selected;
+    }
+
     private void lnkConfigureHSES_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
         MainForm.Instance.OpenUrl("https://underautomation.com/yaskawa/documentation/");
     }
 
+    private void lnkConfigureHC_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        MainForm.Instance.OpenUrl("https://underautomation.com/yaskawa/documentation/");
+    }
+
+    private void lnkConfigureEthernetServer_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        MainForm.Instance.OpenUrl("https://underautomation.com/yaskawa/documentation/");
+    }
 }

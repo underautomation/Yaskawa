@@ -1,6 +1,8 @@
 ﻿using System.Windows.Forms;
+using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 
-interface IUserControl : IContainerControl
+public interface IUserControl : IContainerControl
 {
     // Title of the user control
     string Title { get; }
@@ -17,4 +19,11 @@ interface IUserControl : IContainerControl
     // Called when the control is replaced by another
     void OnClose();
 
+}
+
+public interface ISelectableControl<T> : IUserControl where T:IYaskawaClient
+{
+    T SelectedProtocol { get; set; }
+
+    YaskawaRobot Robot { get; set; }
 }

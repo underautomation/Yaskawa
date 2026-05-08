@@ -34,6 +34,9 @@
 	  <Compile Update="Components\IoControl.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>
+	  <Compile Update="Components\ProtocolSelector.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
 	  <Compile Update="Components\VariableControl.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>

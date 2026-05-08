@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
 
-public partial class PositionControl : UserControl, IUserControl
+public partial class PositionControl : UserControl, ISelectableControl<IPositionReader>
 {
     static PositionControl()
     {
@@ -12,19 +13,24 @@ public partial class PositionControl : UserControl, IUserControl
         TypeDescriptor.AddAttributes(typeof(RobotPosture), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
     }
 
-    YaskawaRobot _robot;
+    public IPositionReader SelectedClient { get; set; }
 
+    public IPositionReader SelectedProtocol {  get; set; }
+    public YaskawaRobot Robot { get; set; }
 
     public PositionControl(YaskawaRobot Yaskawa)
     {
-        _robot = Yaskawa;
+        Robot = Yaskawa;
         InitializeComponent();
+
+        protocolSelector.Initialize(this);        
     }
 
     #region IUserControl
-    public bool FeatureEnabled => _robot.HighSpeedEServer.Connected;
+    public bool FeatureEnabled => SelectedClient.Connected;
 
     public string Title => "Current position";
+
 
     public void OnClose()
     {
@@ -49,11 +55,20 @@ public partial class PositionControl : UserControl, IUserControl
         {
             try
             {
-                var error = _robot.HighSpeedEServer.GetPositionError();
+                object error;
 
-                var cartesian = _robot.HighSpeedEServer.GetRobotCartesianPosition();
+                if (SelectedProtocol == Robot.HighSpeedEServer)
+                {
+                    error = Robot.HighSpeedEServer.GetPositionError();
+                }
+                else
+                {
+                    error = "(only supported with Hight Speed Ethernet Server)";
+                }
 
-                var joints = _robot.HighSpeedEServer.GetRobotJointPosition();
+                var cartesian = SelectedProtocol.GetRobotCartesianPosition();
+
+                var joints = SelectedProtocol.GetRobotJointPosition();
 
                 this.Invoke(new Action(() =>
                 {

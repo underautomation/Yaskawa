@@ -1,9 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
 using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 
 public partial class MainForm : Form
 {

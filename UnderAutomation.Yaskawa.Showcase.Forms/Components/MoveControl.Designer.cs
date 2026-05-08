@@ -63,6 +63,8 @@ partial class MoveControl
         btnCopyJoint = new Button();
         btnCopyCartesian = new Button();
         btnStop = new Button();
+        panel1 = new Panel();
+        panel2 = new Panel();
         ((System.ComponentModel.ISupportInitialize)nudSpeedJoint).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudX).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudY).BeginInit();
@@ -73,12 +75,14 @@ partial class MoveControl
         ((System.ComponentModel.ISupportInitialize)nudSpeedCartesian).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudTool).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudUserCoordinate).BeginInit();
+        panel1.SuspendLayout();
+        panel2.SuspendLayout();
         SuspendLayout();
         // 
         // gridJoints
         // 
         gridJoints.HelpVisible = false;
-        gridJoints.Location = new Point(101, 131);
+        gridJoints.Location = new Point(95, 37);
         gridJoints.Name = "gridJoints";
         gridJoints.PropertySort = PropertySort.Alphabetical;
         gridJoints.Size = new Size(160, 194);
@@ -87,7 +91,7 @@ partial class MoveControl
         // 
         // btnMoveJoints
         // 
-        btnMoveJoints.Location = new Point(101, 413);
+        btnMoveJoints.Location = new Point(95, 319);
         btnMoveJoints.Name = "btnMoveJoints";
         btnMoveJoints.Size = new Size(160, 23);
         btnMoveJoints.TabIndex = 27;
@@ -98,7 +102,7 @@ partial class MoveControl
         // nudSpeedJoint
         // 
         nudSpeedJoint.DecimalPlaces = 2;
-        nudSpeedJoint.Location = new Point(101, 372);
+        nudSpeedJoint.Location = new Point(95, 278);
         nudSpeedJoint.Name = "nudSpeedJoint";
         nudSpeedJoint.Size = new Size(160, 23);
         nudSpeedJoint.TabIndex = 28;
@@ -106,7 +110,7 @@ partial class MoveControl
         // 
         // label1
         // 
-        label1.Location = new Point(86, 349);
+        label1.Location = new Point(80, 255);
         label1.Name = "label1";
         label1.Size = new Size(175, 23);
         label1.TabIndex = 29;
@@ -115,7 +119,7 @@ partial class MoveControl
         // 
         // label2
         // 
-        label2.Location = new Point(77, 105);
+        label2.Location = new Point(71, 11);
         label2.Name = "label2";
         label2.Size = new Size(184, 23);
         label2.TabIndex = 29;
@@ -124,7 +128,7 @@ partial class MoveControl
         // 
         // btnMoveCartesian
         // 
-        btnMoveCartesian.Location = new Point(385, 468);
+        btnMoveCartesian.Location = new Point(81, 371);
         btnMoveCartesian.Name = "btnMoveCartesian";
         btnMoveCartesian.Size = new Size(335, 23);
         btnMoveCartesian.TabIndex = 27;
@@ -134,7 +138,7 @@ partial class MoveControl
         // 
         // label4
         // 
-        label4.Location = new Point(370, 131);
+        label4.Location = new Point(66, 34);
         label4.Name = "label4";
         label4.Size = new Size(75, 23);
         label4.TabIndex = 29;
@@ -144,7 +148,7 @@ partial class MoveControl
         // nudX
         // 
         nudX.DecimalPlaces = 2;
-        nudX.Location = new Point(451, 131);
+        nudX.Location = new Point(147, 34);
         nudX.Maximum = new decimal(new int[] { 1874919423, 2328306, 0, 0 });
         nudX.Minimum = new decimal(new int[] { 1874919423, 2328306, 0, int.MinValue });
         nudX.Name = "nudX";
@@ -154,7 +158,7 @@ partial class MoveControl
         // nudY
         // 
         nudY.DecimalPlaces = 2;
-        nudY.Location = new Point(451, 160);
+        nudY.Location = new Point(147, 63);
         nudY.Maximum = new decimal(new int[] { 1874919423, 2328306, 0, 0 });
         nudY.Minimum = new decimal(new int[] { 1874919423, 2328306, 0, int.MinValue });
         nudY.Name = "nudY";
@@ -163,7 +167,7 @@ partial class MoveControl
         // 
         // label5
         // 
-        label5.Location = new Point(370, 160);
+        label5.Location = new Point(66, 63);
         label5.Name = "label5";
         label5.Size = new Size(75, 23);
         label5.TabIndex = 29;
@@ -173,7 +177,7 @@ partial class MoveControl
         // nudZ
         // 
         nudZ.DecimalPlaces = 2;
-        nudZ.Location = new Point(451, 189);
+        nudZ.Location = new Point(147, 92);
         nudZ.Maximum = new decimal(new int[] { 1874919423, 2328306, 0, 0 });
         nudZ.Minimum = new decimal(new int[] { 1874919423, 2328306, 0, int.MinValue });
         nudZ.Name = "nudZ";
@@ -182,7 +186,7 @@ partial class MoveControl
         // 
         // label6
         // 
-        label6.Location = new Point(370, 189);
+        label6.Location = new Point(66, 92);
         label6.Name = "label6";
         label6.Size = new Size(75, 23);
         label6.TabIndex = 29;
@@ -192,7 +196,7 @@ partial class MoveControl
         // nudRx
         // 
         nudRx.DecimalPlaces = 2;
-        nudRx.Location = new Point(451, 218);
+        nudRx.Location = new Point(147, 121);
         nudRx.Maximum = new decimal(new int[] { 1874919423, 2328306, 0, 0 });
         nudRx.Minimum = new decimal(new int[] { 1874919423, 2328306, 0, int.MinValue });
         nudRx.Name = "nudRx";
@@ -201,7 +205,7 @@ partial class MoveControl
         // 
         // label7
         // 
-        label7.Location = new Point(370, 218);
+        label7.Location = new Point(66, 121);
         label7.Name = "label7";
         label7.Size = new Size(75, 23);
         label7.TabIndex = 29;
@@ -211,7 +215,7 @@ partial class MoveControl
         // nudRy
         // 
         nudRy.DecimalPlaces = 2;
-        nudRy.Location = new Point(451, 247);
+        nudRy.Location = new Point(147, 150);
         nudRy.Maximum = new decimal(new int[] { 1874919423, 2328306, 0, 0 });
         nudRy.Minimum = new decimal(new int[] { 1874919423, 2328306, 0, int.MinValue });
         nudRy.Name = "nudRy";
@@ -220,7 +224,7 @@ partial class MoveControl
         // 
         // label8
         // 
-        label8.Location = new Point(370, 247);
+        label8.Location = new Point(66, 150);
         label8.Name = "label8";
         label8.Size = new Size(75, 23);
         label8.TabIndex = 29;
@@ -230,7 +234,7 @@ partial class MoveControl
         // nudRz
         // 
         nudRz.DecimalPlaces = 2;
-        nudRz.Location = new Point(451, 276);
+        nudRz.Location = new Point(147, 179);
         nudRz.Maximum = new decimal(new int[] { 1874919423, 2328306, 0, 0 });
         nudRz.Minimum = new decimal(new int[] { 1874919423, 2328306, 0, int.MinValue });
         nudRz.Name = "nudRz";
@@ -239,7 +243,7 @@ partial class MoveControl
         // 
         // label9
         // 
-        label9.Location = new Point(370, 276);
+        label9.Location = new Point(66, 179);
         label9.Name = "label9";
         label9.Size = new Size(75, 23);
         label9.TabIndex = 29;
@@ -248,7 +252,7 @@ partial class MoveControl
         // 
         // label10
         // 
-        label10.Location = new Point(370, 302);
+        label10.Location = new Point(66, 205);
         label10.Name = "label10";
         label10.Size = new Size(75, 23);
         label10.TabIndex = 29;
@@ -258,7 +262,7 @@ partial class MoveControl
         // nudSpeedCartesian
         // 
         nudSpeedCartesian.DecimalPlaces = 2;
-        nudSpeedCartesian.Location = new Point(385, 323);
+        nudSpeedCartesian.Location = new Point(81, 226);
         nudSpeedCartesian.Name = "nudSpeedCartesian";
         nudSpeedCartesian.Size = new Size(160, 23);
         nudSpeedCartesian.TabIndex = 28;
@@ -269,14 +273,14 @@ partial class MoveControl
         cbUnit.DropDownStyle = ComboBoxStyle.DropDownList;
         cbUnit.FormattingEnabled = true;
         cbUnit.Items.AddRange(new object[] { "%", "mm/s", "°/s" });
-        cbUnit.Location = new Point(548, 323);
+        cbUnit.Location = new Point(244, 226);
         cbUnit.Name = "cbUnit";
         cbUnit.Size = new Size(63, 23);
         cbUnit.TabIndex = 30;
         // 
         // label11
         // 
-        label11.Location = new Point(370, 349);
+        label11.Location = new Point(66, 252);
         label11.Name = "label11";
         label11.Size = new Size(175, 23);
         label11.TabIndex = 29;
@@ -287,14 +291,14 @@ partial class MoveControl
         // 
         cbCartesianCommandType.DropDownStyle = ComboBoxStyle.DropDownList;
         cbCartesianCommandType.FormattingEnabled = true;
-        cbCartesianCommandType.Location = new Point(385, 375);
+        cbCartesianCommandType.Location = new Point(81, 278);
         cbCartesianCommandType.Name = "cbCartesianCommandType";
         cbCartesianCommandType.Size = new Size(160, 23);
         cbCartesianCommandType.TabIndex = 30;
         // 
         // label12
         // 
-        label12.Location = new Point(370, 105);
+        label12.Location = new Point(66, 8);
         label12.Name = "label12";
         label12.Size = new Size(184, 23);
         label12.TabIndex = 29;
@@ -303,7 +307,7 @@ partial class MoveControl
         // 
         // label13
         // 
-        label13.Location = new Point(370, 401);
+        label13.Location = new Point(66, 304);
         label13.Name = "label13";
         label13.Size = new Size(175, 23);
         label13.TabIndex = 29;
@@ -314,7 +318,7 @@ partial class MoveControl
         // 
         cbFrame.DropDownStyle = ComboBoxStyle.DropDownList;
         cbFrame.FormattingEnabled = true;
-        cbFrame.Location = new Point(385, 427);
+        cbFrame.Location = new Point(81, 330);
         cbFrame.Name = "cbFrame";
         cbFrame.Size = new Size(160, 23);
         cbFrame.TabIndex = 30;
@@ -323,7 +327,7 @@ partial class MoveControl
         // gridPosture
         // 
         gridPosture.HelpVisible = false;
-        gridPosture.Location = new Point(560, 131);
+        gridPosture.Location = new Point(256, 34);
         gridPosture.Name = "gridPosture";
         gridPosture.PropertySort = PropertySort.Alphabetical;
         gridPosture.Size = new Size(160, 168);
@@ -332,7 +336,7 @@ partial class MoveControl
         // 
         // label14
         // 
-        label14.Location = new Point(608, 375);
+        label14.Location = new Point(304, 278);
         label14.Name = "label14";
         label14.Size = new Size(51, 23);
         label14.TabIndex = 29;
@@ -341,14 +345,14 @@ partial class MoveControl
         // 
         // nudTool
         // 
-        nudTool.Location = new Point(665, 375);
+        nudTool.Location = new Point(361, 278);
         nudTool.Name = "nudTool";
         nudTool.Size = new Size(55, 23);
         nudTool.TabIndex = 28;
         // 
         // label15
         // 
-        label15.Location = new Point(561, 426);
+        label15.Location = new Point(257, 329);
         label15.Name = "label15";
         label15.Size = new Size(98, 23);
         label15.TabIndex = 29;
@@ -357,7 +361,7 @@ partial class MoveControl
         // 
         // nudUserCoordinate
         // 
-        nudUserCoordinate.Location = new Point(665, 426);
+        nudUserCoordinate.Location = new Point(361, 329);
         nudUserCoordinate.Name = "nudUserCoordinate";
         nudUserCoordinate.Size = new Size(55, 23);
         nudUserCoordinate.TabIndex = 28;
@@ -387,7 +391,7 @@ partial class MoveControl
         // 
         // btnCopyJoint
         // 
-        btnCopyJoint.Location = new Point(14, 205);
+        btnCopyJoint.Location = new Point(8, 111);
         btnCopyJoint.Name = "btnCopyJoint";
         btnCopyJoint.Size = new Size(81, 65);
         btnCopyJoint.TabIndex = 33;
@@ -397,7 +401,7 @@ partial class MoveControl
         // 
         // btnCopyCartesian
         // 
-        btnCopyCartesian.Location = new Point(310, 179);
+        btnCopyCartesian.Location = new Point(6, 82);
         btnCopyCartesian.Name = "btnCopyCartesian";
         btnCopyCartesian.Size = new Size(81, 65);
         btnCopyCartesian.TabIndex = 33;
@@ -415,44 +419,62 @@ partial class MoveControl
         btnStop.UseVisualStyleBackColor = true;
         btnStop.Click += btnStop_Click;
         // 
+        // panel1
+        // 
+        panel1.BorderStyle = BorderStyle.Fixed3D;
+        panel1.Controls.Add(btnCopyJoint);
+        panel1.Controls.Add(label2);
+        panel1.Controls.Add(label1);
+        panel1.Controls.Add(nudSpeedJoint);
+        panel1.Controls.Add(btnMoveJoints);
+        panel1.Controls.Add(gridJoints);
+        panel1.Location = new Point(6, 94);
+        panel1.Name = "panel1";
+        panel1.Size = new Size(276, 411);
+        panel1.TabIndex = 35;
+        // 
+        // panel2
+        // 
+        panel2.BorderStyle = BorderStyle.Fixed3D;
+        panel2.Controls.Add(btnCopyCartesian);
+        panel2.Controls.Add(nudUserCoordinate);
+        panel2.Controls.Add(nudTool);
+        panel2.Controls.Add(nudSpeedCartesian);
+        panel2.Controls.Add(cbUnit);
+        panel2.Controls.Add(cbFrame);
+        panel2.Controls.Add(cbCartesianCommandType);
+        panel2.Controls.Add(label12);
+        panel2.Controls.Add(label13);
+        panel2.Controls.Add(label15);
+        panel2.Controls.Add(label11);
+        panel2.Controls.Add(label14);
+        panel2.Controls.Add(label10);
+        panel2.Controls.Add(label9);
+        panel2.Controls.Add(label8);
+        panel2.Controls.Add(label7);
+        panel2.Controls.Add(label6);
+        panel2.Controls.Add(label5);
+        panel2.Controls.Add(label4);
+        panel2.Controls.Add(nudRz);
+        panel2.Controls.Add(nudRy);
+        panel2.Controls.Add(nudRx);
+        panel2.Controls.Add(nudZ);
+        panel2.Controls.Add(nudY);
+        panel2.Controls.Add(nudX);
+        panel2.Controls.Add(btnMoveCartesian);
+        panel2.Controls.Add(gridPosture);
+        panel2.Location = new Point(304, 94);
+        panel2.Name = "panel2";
+        panel2.Size = new Size(440, 411);
+        panel2.TabIndex = 36;
+        // 
         // MoveControl
         // 
+        Controls.Add(panel2);
+        Controls.Add(panel1);
         Controls.Add(btnStop);
-        Controls.Add(btnCopyCartesian);
-        Controls.Add(btnCopyJoint);
         Controls.Add(btnServoOn);
         Controls.Add(btnServoOff);
-        Controls.Add(nudUserCoordinate);
-        Controls.Add(nudTool);
-        Controls.Add(nudSpeedCartesian);
-        Controls.Add(cbUnit);
-        Controls.Add(cbFrame);
-        Controls.Add(cbCartesianCommandType);
-        Controls.Add(label12);
-        Controls.Add(label13);
-        Controls.Add(label2);
-        Controls.Add(label15);
-        Controls.Add(label11);
-        Controls.Add(label14);
-        Controls.Add(label10);
-        Controls.Add(label9);
-        Controls.Add(label8);
-        Controls.Add(label7);
-        Controls.Add(label6);
-        Controls.Add(label5);
-        Controls.Add(label4);
-        Controls.Add(label1);
-        Controls.Add(nudRz);
-        Controls.Add(nudRy);
-        Controls.Add(nudRx);
-        Controls.Add(nudZ);
-        Controls.Add(nudY);
-        Controls.Add(nudX);
-        Controls.Add(nudSpeedJoint);
-        Controls.Add(btnMoveCartesian);
-        Controls.Add(btnMoveJoints);
-        Controls.Add(gridPosture);
-        Controls.Add(gridJoints);
         Name = "MoveControl";
         Size = new Size(823, 575);
         ((System.ComponentModel.ISupportInitialize)nudSpeedJoint).EndInit();
@@ -465,6 +487,8 @@ partial class MoveControl
         ((System.ComponentModel.ISupportInitialize)nudSpeedCartesian).EndInit();
         ((System.ComponentModel.ISupportInitialize)nudTool).EndInit();
         ((System.ComponentModel.ISupportInitialize)nudUserCoordinate).EndInit();
+        panel1.ResumeLayout(false);
+        panel2.ResumeLayout(false);
         ResumeLayout(false);
     }
 
@@ -506,4 +530,6 @@ partial class MoveControl
     private Button btnCopyJoint;
     private Button btnCopyCartesian;
     private Button btnStop;
+    private Panel panel1;
+    private Panel panel2;
 }
