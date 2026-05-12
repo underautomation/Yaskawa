@@ -65,6 +65,17 @@ partial class MoveControl
         btnStop = new Button();
         panel1 = new Panel();
         panel2 = new Panel();
+        panelHostControl = new Panel();
+        lblHostControl = new Label();
+        cbHcCoord = new ComboBox();
+        lblHcCoord = new Label();
+        cbHcSpeedType = new ComboBox();
+        lblHcSpeedType = new Label();
+        btnHcMoveJoint = new Button();
+        btnHcMoveLinear = new Button();
+        btnHcMoveIncremental = new Button();
+        btnHcMovePulseJoint = new Button();
+        btnHcMovePulseLinear = new Button();
         protocolSelector = new ProtocolSelector();
         ((System.ComponentModel.ISupportInitialize)nudSpeedJoint).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudX).BeginInit();
@@ -78,6 +89,7 @@ partial class MoveControl
         ((System.ComponentModel.ISupportInitialize)nudUserCoordinate).BeginInit();
         panel1.SuspendLayout();
         panel2.SuspendLayout();
+        panelHostControl.SuspendLayout();
         SuspendLayout();
         // 
         // gridJoints
@@ -469,12 +481,126 @@ partial class MoveControl
         panel2.Size = new Size(440, 411);
         panel2.TabIndex = 36;
         // 
+        // panelHostControl
+        // 
+        panelHostControl.BorderStyle = BorderStyle.Fixed3D;
+        panelHostControl.Controls.Add(lblHostControl);
+        panelHostControl.Controls.Add(lblHcCoord);
+        panelHostControl.Controls.Add(cbHcCoord);
+        panelHostControl.Controls.Add(lblHcSpeedType);
+        panelHostControl.Controls.Add(cbHcSpeedType);
+        panelHostControl.Controls.Add(btnHcMoveJoint);
+        panelHostControl.Controls.Add(btnHcMoveLinear);
+        panelHostControl.Controls.Add(btnHcMoveIncremental);
+        panelHostControl.Controls.Add(btnHcMovePulseJoint);
+        panelHostControl.Controls.Add(btnHcMovePulseLinear);
+        panelHostControl.Location = new Point(750, 94);
+        panelHostControl.Name = "panelHostControl";
+        panelHostControl.Size = new Size(280, 411);
+        panelHostControl.TabIndex = 38;
+        // 
+        // lblHostControl
+        // 
+        lblHostControl.Location = new Point(8, 8);
+        lblHostControl.Name = "lblHostControl";
+        lblHostControl.Size = new Size(260, 20);
+        lblHostControl.TabIndex = 0;
+        lblHostControl.Text = "Host Control moves";
+        lblHostControl.TextAlign = ContentAlignment.MiddleCenter;
+        lblHostControl.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
+        // 
+        // lblHcCoord
+        // 
+        lblHcCoord.AutoSize = true;
+        lblHcCoord.Location = new Point(8, 38);
+        lblHcCoord.Name = "lblHcCoord";
+        lblHcCoord.Size = new Size(115, 15);
+        lblHcCoord.TabIndex = 1;
+        lblHcCoord.Text = "Coordinate system :";
+        // 
+        // cbHcCoord
+        // 
+        cbHcCoord.DropDownStyle = ComboBoxStyle.DropDownList;
+        cbHcCoord.FormattingEnabled = true;
+        cbHcCoord.Location = new Point(8, 56);
+        cbHcCoord.Name = "cbHcCoord";
+        cbHcCoord.Size = new Size(260, 23);
+        cbHcCoord.TabIndex = 2;
+        // 
+        // lblHcSpeedType
+        // 
+        lblHcSpeedType.AutoSize = true;
+        lblHcSpeedType.Location = new Point(8, 88);
+        lblHcSpeedType.Name = "lblHcSpeedType";
+        lblHcSpeedType.Size = new Size(75, 15);
+        lblHcSpeedType.TabIndex = 3;
+        lblHcSpeedType.Text = "Speed type :";
+        // 
+        // cbHcSpeedType
+        // 
+        cbHcSpeedType.DropDownStyle = ComboBoxStyle.DropDownList;
+        cbHcSpeedType.FormattingEnabled = true;
+        cbHcSpeedType.Location = new Point(8, 106);
+        cbHcSpeedType.Name = "cbHcSpeedType";
+        cbHcSpeedType.Size = new Size(260, 23);
+        cbHcSpeedType.TabIndex = 4;
+        // 
+        // btnHcMoveJoint
+        // 
+        btnHcMoveJoint.Location = new Point(8, 145);
+        btnHcMoveJoint.Name = "btnHcMoveJoint";
+        btnHcMoveJoint.Size = new Size(260, 30);
+        btnHcMoveJoint.TabIndex = 5;
+        btnHcMoveJoint.Text = "MoveJoint (XYZRxRyRz, % speed)";
+        btnHcMoveJoint.UseVisualStyleBackColor = true;
+        btnHcMoveJoint.Click += btnHcMoveJoint_Click;
+        // 
+        // btnHcMoveLinear
+        // 
+        btnHcMoveLinear.Location = new Point(8, 181);
+        btnHcMoveLinear.Name = "btnHcMoveLinear";
+        btnHcMoveLinear.Size = new Size(260, 30);
+        btnHcMoveLinear.TabIndex = 6;
+        btnHcMoveLinear.Text = "MoveLinear (XYZRxRyRz)";
+        btnHcMoveLinear.UseVisualStyleBackColor = true;
+        btnHcMoveLinear.Click += btnHcMoveLinear_Click;
+        // 
+        // btnHcMoveIncremental
+        // 
+        btnHcMoveIncremental.Location = new Point(8, 217);
+        btnHcMoveIncremental.Name = "btnHcMoveIncremental";
+        btnHcMoveIncremental.Size = new Size(260, 30);
+        btnHcMoveIncremental.TabIndex = 7;
+        btnHcMoveIncremental.Text = "MoveIncremental (delta XYZRxRyRz)";
+        btnHcMoveIncremental.UseVisualStyleBackColor = true;
+        btnHcMoveIncremental.Click += btnHcMoveIncremental_Click;
+        // 
+        // btnHcMovePulseJoint
+        // 
+        btnHcMovePulseJoint.Location = new Point(8, 263);
+        btnHcMovePulseJoint.Name = "btnHcMovePulseJoint";
+        btnHcMovePulseJoint.Size = new Size(260, 30);
+        btnHcMovePulseJoint.TabIndex = 8;
+        btnHcMovePulseJoint.Text = "MovePulseJoint (joint pulses, % speed)";
+        btnHcMovePulseJoint.UseVisualStyleBackColor = true;
+        btnHcMovePulseJoint.Click += btnHcMovePulseJoint_Click;
+        // 
+        // btnHcMovePulseLinear
+        // 
+        btnHcMovePulseLinear.Location = new Point(8, 299);
+        btnHcMovePulseLinear.Name = "btnHcMovePulseLinear";
+        btnHcMovePulseLinear.Size = new Size(260, 30);
+        btnHcMovePulseLinear.TabIndex = 9;
+        btnHcMovePulseLinear.Text = "MovePulseLinear (joint pulses)";
+        btnHcMovePulseLinear.UseVisualStyleBackColor = true;
+        btnHcMovePulseLinear.Click += btnHcMovePulseLinear_Click;
+        // 
         // protocolSelector
         // 
         protocolSelector.Dock = DockStyle.Top;
         protocolSelector.Location = new Point(0, 0);
         protocolSelector.Name = "protocolSelector";
-        protocolSelector.Size = new Size(823, 30);
+        protocolSelector.Size = new Size(1050, 30);
         protocolSelector.TabIndex = 37;
         // 
         // MoveControl
@@ -482,11 +608,12 @@ partial class MoveControl
         Controls.Add(protocolSelector);
         Controls.Add(panel2);
         Controls.Add(panel1);
+        Controls.Add(panelHostControl);
         Controls.Add(btnStop);
         Controls.Add(btnServoOn);
         Controls.Add(btnServoOff);
         Name = "MoveControl";
-        Size = new Size(823, 575);
+        Size = new Size(1050, 575);
         ((System.ComponentModel.ISupportInitialize)nudSpeedJoint).EndInit();
         ((System.ComponentModel.ISupportInitialize)nudX).EndInit();
         ((System.ComponentModel.ISupportInitialize)nudY).EndInit();
@@ -499,6 +626,8 @@ partial class MoveControl
         ((System.ComponentModel.ISupportInitialize)nudUserCoordinate).EndInit();
         panel1.ResumeLayout(false);
         panel2.ResumeLayout(false);
+        panelHostControl.ResumeLayout(false);
+        panelHostControl.PerformLayout();
         ResumeLayout(false);
     }
 
@@ -542,5 +671,16 @@ partial class MoveControl
     private Button btnStop;
     private Panel panel1;
     private Panel panel2;
+    private Panel panelHostControl;
+    private Label lblHostControl;
+    private ComboBox cbHcCoord;
+    private Label lblHcCoord;
+    private ComboBox cbHcSpeedType;
+    private Label lblHcSpeedType;
+    private Button btnHcMoveJoint;
+    private Button btnHcMoveLinear;
+    private Button btnHcMoveIncremental;
+    private Button btnHcMovePulseJoint;
+    private Button btnHcMovePulseLinear;
     private ProtocolSelector protocolSelector;
 }

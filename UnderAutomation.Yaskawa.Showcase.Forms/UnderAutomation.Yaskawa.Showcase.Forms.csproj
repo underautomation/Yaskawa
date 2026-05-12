@@ -25,6 +25,9 @@
 	  <PackageReference Include="System.IO.Ports" Version="10.0.3" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Update="Components\UserFrameControl.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
 	  <Compile Update="Components\MoveControl.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>
@@ -35,6 +38,9 @@
 	    <SubType>UserControl</SubType>
 	  </Compile>
 	  <Compile Update="Components\ProtocolSelector.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
+	  <Compile Update="Components\DiagnosticsControl.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>
 	  <Compile Update="Components\VariableControl.cs">

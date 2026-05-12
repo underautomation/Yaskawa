@@ -31,6 +31,12 @@ partial class PendantControl
         btnPopup = new Button();
         btnLock = new Button();
         btnUnlock = new Button();
+        cbMode = new ComboBox();
+        btnSetMode = new Button();
+        lblMode = new Label();
+        cbCycle = new ComboBox();
+        btnSetCycle = new Button();
+        lblCycle = new Label();
         protocolSelector = new ProtocolSelector();
         SuspendLayout();
         // 
@@ -73,6 +79,62 @@ partial class PendantControl
         btnUnlock.UseVisualStyleBackColor = true;
         btnUnlock.Click += btnUnlock_Click;
         // 
+        // lblMode
+        // 
+        lblMode.AutoSize = true;
+        lblMode.Location = new Point(16, 235);
+        lblMode.Name = "lblMode";
+        lblMode.Size = new Size(43, 15);
+        lblMode.TabIndex = 13;
+        lblMode.Text = "Mode :";
+        // 
+        // cbMode
+        // 
+        cbMode.DropDownStyle = ComboBoxStyle.DropDownList;
+        cbMode.FormattingEnabled = true;
+        cbMode.Location = new Point(16, 253);
+        cbMode.Name = "cbMode";
+        cbMode.Size = new Size(180, 23);
+        cbMode.TabIndex = 14;
+        // 
+        // btnSetMode
+        // 
+        btnSetMode.Location = new Point(202, 252);
+        btnSetMode.Name = "btnSetMode";
+        btnSetMode.Size = new Size(164, 25);
+        btnSetMode.TabIndex = 15;
+        btnSetMode.Text = "Set mode";
+        btnSetMode.UseVisualStyleBackColor = true;
+        btnSetMode.Click += btnSetMode_Click;
+        // 
+        // lblCycle
+        // 
+        lblCycle.AutoSize = true;
+        lblCycle.Location = new Point(16, 290);
+        lblCycle.Name = "lblCycle";
+        lblCycle.Size = new Size(40, 15);
+        lblCycle.TabIndex = 16;
+        lblCycle.Text = "Cycle :";
+        // 
+        // cbCycle
+        // 
+        cbCycle.DropDownStyle = ComboBoxStyle.DropDownList;
+        cbCycle.FormattingEnabled = true;
+        cbCycle.Location = new Point(16, 308);
+        cbCycle.Name = "cbCycle";
+        cbCycle.Size = new Size(180, 23);
+        cbCycle.TabIndex = 17;
+        // 
+        // btnSetCycle
+        // 
+        btnSetCycle.Location = new Point(202, 307);
+        btnSetCycle.Name = "btnSetCycle";
+        btnSetCycle.Size = new Size(164, 25);
+        btnSetCycle.TabIndex = 18;
+        btnSetCycle.Text = "Set cycle";
+        btnSetCycle.UseVisualStyleBackColor = true;
+        btnSetCycle.Click += btnSetCycle_Click;
+        // 
         // protocolSelector
         // 
         protocolSelector.Dock = DockStyle.Top;
@@ -88,6 +150,12 @@ partial class PendantControl
         Controls.Add(btnPopup);
         Controls.Add(btnUnlock);
         Controls.Add(btnLock);
+        Controls.Add(lblMode);
+        Controls.Add(cbMode);
+        Controls.Add(btnSetMode);
+        Controls.Add(lblCycle);
+        Controls.Add(cbCycle);
+        Controls.Add(btnSetCycle);
         Name = "PendantControl";
         Size = new Size(593, 418);
         ResumeLayout(false);
@@ -100,5 +168,11 @@ partial class PendantControl
     private System.Windows.Forms.Button btnPopup;
     private System.Windows.Forms.Button btnLock;
     private System.Windows.Forms.Button btnUnlock;
+    private System.Windows.Forms.ComboBox cbMode;
+    private System.Windows.Forms.Button btnSetMode;
+    private System.Windows.Forms.Label lblMode;
+    private System.Windows.Forms.ComboBox cbCycle;
+    private System.Windows.Forms.Button btnSetCycle;
+    private System.Windows.Forms.Label lblCycle;
     private ProtocolSelector protocolSelector;
 }

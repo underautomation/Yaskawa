@@ -59,30 +59,24 @@ public partial class KinematicsControl : UserControl, IUserControl
     }
 
     private void btnJointToCart_Click(object sender, EventArgs e)
-    {/*
-        Run(() =>
-        {
-            return _robot.HighSpeedEServer.ConvertJointToCartesian(ControlGroup, GetInput().ToPositionData());
-        });*/
+    {
+        // Run(() => _robot.HighSpeedEServer.ConvertJointToCartesian(ControlGroup, GetInput().ToPositionData()));
     }
     private void btnCartToJoint_Click(object sender, EventArgs e)
-    {/*
-        Run(() => _robot.HighSpeedEServer.ConvertCartesianToJoint(ControlGroup, GetInput().ToPositionData()));
-  */
+    {
+        // Run(() => _robot.HighSpeedEServer.ConvertCartesianToJoint(ControlGroup, GetInput().ToPositionData()));
     }
     private void btnCoordFrame_Click(object sender, EventArgs e)
-    {/*
-        Run(() => _robot.HighSpeedEServer.ConvertCoordinateFrame(ControlGroup, GetInput().ToPositionData()));
-*/  }
+    {
+        // Run(() => _robot.HighSpeedEServer.ConvertCoordinateFrame(ControlGroup, GetInput().ToPositionData()));
+    }
     private void btnRoundTrip_Click(object sender, EventArgs e)
-    {/*
-        Run(() => _robot.HighSpeedEServer.ConvertCartesianRoundTrip(ControlGroup, GetInput().ToPositionData()));
- */
+    {
+        // Run(() => _robot.HighSpeedEServer.ConvertCartesianRoundTrip(ControlGroup, GetInput().ToPositionData()));
     }
     private void btnTwoStep_Click(object sender, EventArgs e)
-    {/*
-        Run(() => _robot.HighSpeedEServer.ConvertCoordinateFrameTwoStep(ControlGroup, GetInput().ToPositionData()));
- */
+    {
+        // Run(() => _robot.HighSpeedEServer.ConvertCoordinateFrameTwoStep(ControlGroup, GetInput().ToPositionData()));
     }
 
     private void btnUseOutput_Click(object sender, EventArgs e)

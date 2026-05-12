@@ -34,6 +34,13 @@ partial class PositionControl
         gridCartesian = new PropertyGrid();
         label3 = new Label();
         gridError = new PropertyGrid();
+        gridConfig = new PropertyGrid();
+        gridTorque = new PropertyGrid();
+        lblConfig = new Label();
+        lblTorque = new Label();
+        btnGetAxisConfig = new Button();
+        btnGetTorqueHses = new Button();
+        btnGetTorque = new Button();
         protocolSelector = new ProtocolSelector();
         SuspendLayout();
         // 
@@ -99,17 +106,92 @@ partial class PositionControl
         gridError.TabIndex = 25;
         gridError.ToolbarVisible = false;
         // 
+        // lblConfig
+        // 
+        lblConfig.AutoSize = true;
+        lblConfig.Location = new Point(750, 59);
+        lblConfig.Name = "lblConfig";
+        lblConfig.Size = new Size(120, 15);
+        lblConfig.TabIndex = 27;
+        lblConfig.Text = "Axis configuration :";
+        // 
+        // gridConfig
+        // 
+        gridConfig.HelpVisible = false;
+        gridConfig.Location = new Point(750, 77);
+        gridConfig.Name = "gridConfig";
+        gridConfig.PropertySort = PropertySort.Alphabetical;
+        gridConfig.Size = new Size(228, 240);
+        gridConfig.TabIndex = 28;
+        gridConfig.ToolbarVisible = false;
+        // 
+        // btnGetAxisConfig
+        // 
+        btnGetAxisConfig.Location = new Point(750, 323);
+        btnGetAxisConfig.Name = "btnGetAxisConfig";
+        btnGetAxisConfig.Size = new Size(228, 25);
+        btnGetAxisConfig.TabIndex = 29;
+        btnGetAxisConfig.Text = "Get axis configuration (HSES)";
+        btnGetAxisConfig.UseVisualStyleBackColor = true;
+        btnGetAxisConfig.Click += btnGetAxisConfig_Click;
+        // 
+        // lblTorque
+        // 
+        lblTorque.AutoSize = true;
+        lblTorque.Location = new Point(750, 360);
+        lblTorque.Name = "lblTorque";
+        lblTorque.Size = new Size(50, 15);
+        lblTorque.TabIndex = 30;
+        lblTorque.Text = "Torque :";
+        // 
+        // gridTorque
+        // 
+        gridTorque.HelpVisible = false;
+        gridTorque.Location = new Point(750, 378);
+        gridTorque.Name = "gridTorque";
+        gridTorque.PropertySort = PropertySort.Alphabetical;
+        gridTorque.Size = new Size(228, 160);
+        gridTorque.TabIndex = 31;
+        gridTorque.ToolbarVisible = false;
+        // 
+        // btnGetTorqueHses
+        // 
+        btnGetTorqueHses.Location = new Point(750, 544);
+        btnGetTorqueHses.Name = "btnGetTorqueHses";
+        btnGetTorqueHses.Size = new Size(228, 25);
+        btnGetTorqueHses.TabIndex = 32;
+        btnGetTorqueHses.Text = "Get torque (HSES)";
+        btnGetTorqueHses.UseVisualStyleBackColor = true;
+        btnGetTorqueHses.Click += btnGetTorqueHses_Click;
+        // 
+        // btnGetTorque
+        // 
+        btnGetTorque.Location = new Point(750, 575);
+        btnGetTorque.Name = "btnGetTorque";
+        btnGetTorque.Size = new Size(228, 25);
+        btnGetTorque.TabIndex = 33;
+        btnGetTorque.Text = "Get torque (selected protocol)";
+        btnGetTorque.UseVisualStyleBackColor = true;
+        btnGetTorque.Click += btnGetTorque_Click;
+        // 
         // protocolSelector
         // 
         protocolSelector.Dock = DockStyle.Top;
         protocolSelector.Location = new Point(0, 0);
         protocolSelector.Name = "protocolSelector";
-        protocolSelector.Size = new Size(793, 30);
+        protocolSelector.Size = new Size(1000, 30);
         protocolSelector.TabIndex = 26;
         // 
         // PositionControl
         // 
         Controls.Add(protocolSelector);
+        Controls.Add(btnGetTorque);
+        Controls.Add(btnGetTorqueHses);
+        Controls.Add(gridTorque);
+        Controls.Add(lblTorque);
+        Controls.Add(btnGetAxisConfig);
+        Controls.Add(gridConfig);
+        Controls.Add(lblConfig);
         Controls.Add(gridError);
         Controls.Add(label3);
         Controls.Add(gridCartesian);
@@ -117,7 +199,7 @@ partial class PositionControl
         Controls.Add(gridJoints);
         Controls.Add(label2);
         Name = "PositionControl";
-        Size = new Size(793, 620);
+        Size = new Size(1000, 620);
         ResumeLayout(false);
         PerformLayout();
     }
@@ -131,5 +213,12 @@ partial class PositionControl
     private System.Windows.Forms.PropertyGrid gridCartesian;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.PropertyGrid gridError;
+    private System.Windows.Forms.PropertyGrid gridConfig;
+    private System.Windows.Forms.PropertyGrid gridTorque;
+    private System.Windows.Forms.Label lblConfig;
+    private System.Windows.Forms.Label lblTorque;
+    private System.Windows.Forms.Button btnGetAxisConfig;
+    private System.Windows.Forms.Button btnGetTorqueHses;
+    private System.Windows.Forms.Button btnGetTorque;
     private ProtocolSelector protocolSelector;
 }

@@ -45,6 +45,9 @@
         btnDelete = new ToolStripButton();
         btnUpload = new ToolStripButton();
         toolStripSeparator1 = new ToolStripSeparator();
+        btnFtpUpload = new ToolStripButton();
+        btnFtpDownload = new ToolStripButton();
+        toolStripSeparatorFtp = new ToolStripSeparator();
         btnBackup = new ToolStripButton();
         btnDownloadCmos = new ToolStripButton();
         lblProgress = new Label();
@@ -119,7 +122,7 @@
         // 
         // tsFolder
         // 
-        tsFolder.Items.AddRange(new ToolStripItem[] { btnRefresh, btnOpen, btnDownload, btnDelete, btnUpload, toolStripSeparator1, btnBackup, btnDownloadCmos });
+        tsFolder.Items.AddRange(new ToolStripItem[] { btnRefresh, btnOpen, btnDownload, btnDelete, btnUpload, toolStripSeparatorFtp, btnFtpUpload, btnFtpDownload, toolStripSeparator1, btnBackup, btnDownloadCmos });
         tsFolder.Location = new Point(0, 30);
         tsFolder.Name = "tsFolder";
         tsFolder.Size = new Size(1143, 25);
@@ -175,6 +178,29 @@
         // 
         toolStripSeparator1.Name = "toolStripSeparator1";
         toolStripSeparator1.Size = new Size(6, 25);
+        // 
+        // toolStripSeparatorFtp
+        // 
+        toolStripSeparatorFtp.Name = "toolStripSeparatorFtp";
+        toolStripSeparatorFtp.Size = new Size(6, 25);
+        // 
+        // btnFtpUpload
+        // 
+        btnFtpUpload.Image = UnderAutomation.Yaskawa.Showcase.Forms.Properties.Resources.upload_2_line;
+        btnFtpUpload.ImageTransparentColor = Color.Magenta;
+        btnFtpUpload.Name = "btnFtpUpload";
+        btnFtpUpload.Size = new Size(140, 22);
+        btnFtpUpload.Text = "FTP upload files";
+        btnFtpUpload.Click += btnFtpUpload_Click;
+        // 
+        // btnFtpDownload
+        // 
+        btnFtpDownload.Image = (Image)resources.GetObject("btnDownloadCmos.Image");
+        btnFtpDownload.ImageTransparentColor = Color.Magenta;
+        btnFtpDownload.Name = "btnFtpDownload";
+        btnFtpDownload.Size = new Size(160, 22);
+        btnFtpDownload.Text = "FTP download selected";
+        btnFtpDownload.Click += btnFtpDownload_Click;
         // 
         // btnBackup
         // 
@@ -261,6 +287,9 @@
     private System.Windows.Forms.Label lblProgress;
     internal ToolStripButton btnUpload;
     private ToolStripSeparator toolStripSeparator1;
+    private ToolStripSeparator toolStripSeparatorFtp;
+    private ToolStripButton btnFtpUpload;
+    private ToolStripButton btnFtpDownload;
     internal ToolStripButton btnDownloadCmos;
     private SaveFileDialog dlgSaveCMOS;
     private ProtocolSelector protocolSelector;

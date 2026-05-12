@@ -1,7 +1,10 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using UnderAutomation.Yaskawa;
 using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
+using UnderAutomation.Yaskawa.HostControl;
+using UnderAutomation.Yaskawa.HostControl.Internal;
 
 public partial class MoveControl : UserControl, IUserControl, ISelectableControl<IMotionControl>
 {
@@ -28,6 +31,14 @@ public partial class MoveControl : UserControl, IUserControl, ISelectableControl
         cbFrame.SelectedIndex = 0;
 
         cbUnit.SelectedIndex = 0;
+
+        foreach (var coord in System.Enum.GetValues(typeof(HostControlCoordinateSystem)))
+            cbHcCoord.Items.Add(coord);
+        cbHcCoord.SelectedIndex = 0;
+
+        foreach (var spd in System.Enum.GetValues(typeof(HostControlSpeedType)))
+            cbHcSpeedType.Items.Add(spd);
+        cbHcSpeedType.SelectedIndex = 0;
 
         gridJoints.SelectedObject = _joints;
         gridPosture.SelectedObject = new RobotPosture();
@@ -59,6 +70,15 @@ public partial class MoveControl : UserControl, IUserControl, ISelectableControl
         var supportsPosition = SelectedProtocol is IPositionReader;
         btnCopyJoint.Enabled = supportsPosition;
         btnCopyCartesian.Enabled = supportsPosition;
+
+        var hostControl = SelectedProtocol as HostControlClientBase;
+        btnHcMoveJoint.Enabled = hostControl != null;
+        btnHcMoveLinear.Enabled = hostControl != null;
+        btnHcMoveIncremental.Enabled = hostControl != null;
+        btnHcMovePulseJoint.Enabled = hostControl != null;
+        btnHcMovePulseLinear.Enabled = hostControl != null;
+        cbHcCoord.Enabled = hostControl != null;
+        cbHcSpeedType.Enabled = hostControl != null;
     }
     #endregion
 
@@ -118,5 +138,51 @@ public partial class MoveControl : UserControl, IUserControl, ISelectableControl
         var ctrl = (IRobotControl)SelectedProtocol;
         ctrl.SetHold(true);
         ctrl.SetHold(false);
+    }
+
+    private HostControlCoordinateSystem HcCoord => (HostControlCoordinateSystem)cbHcCoord.SelectedItem;
+    private HostControlSpeedType HcSpeedType => (HostControlSpeedType)cbHcSpeedType.SelectedItem;
+
+    private void btnHcMoveJoint_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).MoveJoint(
+            (int)nudSpeedJoint.Value, HcCoord,
+            (double)nudX.Value, (double)nudY.Value, (double)nudZ.Value,
+            (double)nudRx.Value, (double)nudRy.Value, (double)nudRz.Value,
+            toolNumber: (int)nudTool.Value);
+    }
+
+    private void btnHcMoveLinear_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).MoveLinear(
+            HcSpeedType, (double)nudSpeedCartesian.Value, HcCoord,
+            (double)nudX.Value, (double)nudY.Value, (double)nudZ.Value,
+            (double)nudRx.Value, (double)nudRy.Value, (double)nudRz.Value,
+            toolNumber: (int)nudTool.Value);
+    }
+
+    private void btnHcMoveIncremental_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).MoveIncremental(
+            HcSpeedType, (double)nudSpeedCartesian.Value, HcCoord,
+            (double)nudX.Value, (double)nudY.Value, (double)nudZ.Value,
+            (double)nudRx.Value, (double)nudRy.Value, (double)nudRz.Value,
+            toolNumber: (int)nudTool.Value);
+    }
+
+    private void btnHcMovePulseJoint_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).MovePulseJoint(
+            (int)nudSpeedJoint.Value,
+            _joints[0], _joints[1], _joints[2], _joints[3], _joints[4], _joints[5],
+            (int)nudTool.Value);
+    }
+
+    private void btnHcMovePulseLinear_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).MovePulseLinear(
+            HcSpeedType, (double)nudSpeedCartesian.Value,
+            _joints[0], _joints[1], _joints[2], _joints[3], _joints[4], _joints[5],
+            (int)nudTool.Value);
     }
 }

@@ -44,8 +44,29 @@ public partial class PositionControl : UserControl, ISelectableControl<IPosition
 
     public void PeriodicUpdate()
     {
+        var isHses = SelectedProtocol == Robot.HighSpeedEServer;
+        btnGetAxisConfig.Enabled = isHses;
+        btnGetTorqueHses.Enabled = isHses;
+        btnGetTorque.Enabled = SelectedProtocol is ITorqueReader;
     }
     #endregion
+
+    private void btnGetAxisConfig_Click(object sender, EventArgs e)
+    {
+        gridConfig.SelectedObject = Robot.HighSpeedEServer.GetConfigurationInformation();
+        gridConfig.ExpandAllGridItems();
+    }
+
+    private void btnGetTorqueHses_Click(object sender, EventArgs e)
+    {
+        gridTorque.SelectedObject = Robot.HighSpeedEServer.GetTorque();
+        gridTorque.ExpandAllGridItems();
+    }
+
+    private void btnGetTorque_Click(object sender, EventArgs e)
+    {
+        gridTorque.SelectedObject = ((ITorqueReader)SelectedProtocol).GetTorque();
+    }
 
     private void worker_DoWork(object sender, DoWorkEventArgs e)
     {

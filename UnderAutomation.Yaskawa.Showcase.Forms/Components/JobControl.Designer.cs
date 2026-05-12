@@ -47,11 +47,32 @@ partial class JobControl
         btnGetCallStack = new Button();
         label1 = new Label();
         udTaskId = new NumericUpDown();
+        groupBoxHostControl = new GroupBox();
+        txtJobName = new TextBox();
+        lblJobName = new Label();
+        btnGetJobDirectory = new Button();
+        btnDeleteJob = new Button();
+        btnSetMasterJob = new Button();
+        btnWaitCompletion = new Button();
+        udTimeout = new NumericUpDown();
+        lblTimeout = new Label();
+        btnConvertToRelative = new Button();
+        btnConvertToStandard = new Button();
+        cbCoordSystem = new ComboBox();
+        lblCoordSystem = new Label();
+        udConvertMethod = new NumericUpDown();
+        lblConvertMethod = new Label();
+        udRefPosVar = new NumericUpDown();
+        lblRefPosVar = new Label();
         protocolSelector = new ProtocolSelector();
         ((System.ComponentModel.ISupportInitialize)udJobLine).BeginInit();
         panel1.SuspendLayout();
         groupBox1.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)udTaskId).BeginInit();
+        groupBoxHostControl.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)udTimeout).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)udConvertMethod).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)udRefPosVar).BeginInit();
         SuspendLayout();
         // 
         // gridExecuting
@@ -254,6 +275,176 @@ partial class JobControl
         udTaskId.Size = new Size(120, 23);
         udTaskId.TabIndex = 0;
         // 
+        // groupBoxHostControl
+        // 
+        groupBoxHostControl.Controls.Add(lblJobName);
+        groupBoxHostControl.Controls.Add(txtJobName);
+        groupBoxHostControl.Controls.Add(btnGetJobDirectory);
+        groupBoxHostControl.Controls.Add(btnDeleteJob);
+        groupBoxHostControl.Controls.Add(btnSetMasterJob);
+        groupBoxHostControl.Controls.Add(btnWaitCompletion);
+        groupBoxHostControl.Controls.Add(udTimeout);
+        groupBoxHostControl.Controls.Add(lblTimeout);
+        groupBoxHostControl.Controls.Add(lblCoordSystem);
+        groupBoxHostControl.Controls.Add(cbCoordSystem);
+        groupBoxHostControl.Controls.Add(btnConvertToRelative);
+        groupBoxHostControl.Controls.Add(lblConvertMethod);
+        groupBoxHostControl.Controls.Add(udConvertMethod);
+        groupBoxHostControl.Controls.Add(lblRefPosVar);
+        groupBoxHostControl.Controls.Add(udRefPosVar);
+        groupBoxHostControl.Controls.Add(btnConvertToStandard);
+        groupBoxHostControl.Location = new Point(392, 529);
+        groupBoxHostControl.Name = "groupBoxHostControl";
+        groupBoxHostControl.Size = new Size(420, 320);
+        groupBoxHostControl.TabIndex = 22;
+        groupBoxHostControl.TabStop = false;
+        groupBoxHostControl.Text = "Host Control job operations";
+        // 
+        // lblJobName
+        // 
+        lblJobName.AutoSize = true;
+        lblJobName.Location = new Point(12, 25);
+        lblJobName.Name = "lblJobName";
+        lblJobName.Size = new Size(67, 15);
+        lblJobName.TabIndex = 0;
+        lblJobName.Text = "Job name :";
+        // 
+        // txtJobName
+        // 
+        txtJobName.Location = new Point(12, 43);
+        txtJobName.Name = "txtJobName";
+        txtJobName.Size = new Size(200, 23);
+        txtJobName.TabIndex = 1;
+        // 
+        // btnGetJobDirectory
+        // 
+        btnGetJobDirectory.Location = new Point(218, 22);
+        btnGetJobDirectory.Name = "btnGetJobDirectory";
+        btnGetJobDirectory.Size = new Size(190, 23);
+        btnGetJobDirectory.TabIndex = 2;
+        btnGetJobDirectory.Text = "Get job directory (filter pattern)";
+        btnGetJobDirectory.UseVisualStyleBackColor = true;
+        btnGetJobDirectory.Click += btnGetJobDirectory_Click;
+        // 
+        // btnDeleteJob
+        // 
+        btnDeleteJob.Location = new Point(218, 47);
+        btnDeleteJob.Name = "btnDeleteJob";
+        btnDeleteJob.Size = new Size(95, 23);
+        btnDeleteJob.TabIndex = 3;
+        btnDeleteJob.Text = "Delete job";
+        btnDeleteJob.UseVisualStyleBackColor = true;
+        btnDeleteJob.Click += btnDeleteJob_Click;
+        // 
+        // btnSetMasterJob
+        // 
+        btnSetMasterJob.Location = new Point(313, 47);
+        btnSetMasterJob.Name = "btnSetMasterJob";
+        btnSetMasterJob.Size = new Size(95, 23);
+        btnSetMasterJob.TabIndex = 4;
+        btnSetMasterJob.Text = "Set master";
+        btnSetMasterJob.UseVisualStyleBackColor = true;
+        btnSetMasterJob.Click += btnSetMasterJob_Click;
+        // 
+        // lblTimeout
+        // 
+        lblTimeout.AutoSize = true;
+        lblTimeout.Location = new Point(12, 88);
+        lblTimeout.Name = "lblTimeout";
+        lblTimeout.Size = new Size(67, 15);
+        lblTimeout.TabIndex = 5;
+        lblTimeout.Text = "Timeout (s) :";
+        // 
+        // udTimeout
+        // 
+        udTimeout.Location = new Point(85, 86);
+        udTimeout.Maximum = new decimal(new int[] { 3600, 0, 0, 0 });
+        udTimeout.Minimum = new decimal(new int[] { 1, 0, 0, int.MinValue });
+        udTimeout.Name = "udTimeout";
+        udTimeout.Size = new Size(80, 23);
+        udTimeout.TabIndex = 6;
+        udTimeout.Value = new decimal(new int[] { 1, 0, 0, int.MinValue });
+        // 
+        // btnWaitCompletion
+        // 
+        btnWaitCompletion.Location = new Point(218, 84);
+        btnWaitCompletion.Name = "btnWaitCompletion";
+        btnWaitCompletion.Size = new Size(190, 23);
+        btnWaitCompletion.TabIndex = 7;
+        btnWaitCompletion.Text = "Wait for job completion";
+        btnWaitCompletion.UseVisualStyleBackColor = true;
+        btnWaitCompletion.Click += btnWaitCompletion_Click;
+        // 
+        // lblCoordSystem
+        // 
+        lblCoordSystem.AutoSize = true;
+        lblCoordSystem.Location = new Point(12, 130);
+        lblCoordSystem.Name = "lblCoordSystem";
+        lblCoordSystem.Size = new Size(115, 15);
+        lblCoordSystem.TabIndex = 8;
+        lblCoordSystem.Text = "Coordinate system :";
+        // 
+        // cbCoordSystem
+        // 
+        cbCoordSystem.DropDownStyle = ComboBoxStyle.DropDownList;
+        cbCoordSystem.FormattingEnabled = true;
+        cbCoordSystem.Location = new Point(12, 148);
+        cbCoordSystem.Name = "cbCoordSystem";
+        cbCoordSystem.Size = new Size(200, 23);
+        cbCoordSystem.TabIndex = 9;
+        // 
+        // btnConvertToRelative
+        // 
+        btnConvertToRelative.Location = new Point(218, 148);
+        btnConvertToRelative.Name = "btnConvertToRelative";
+        btnConvertToRelative.Size = new Size(190, 23);
+        btnConvertToRelative.TabIndex = 10;
+        btnConvertToRelative.Text = "Convert to relative job";
+        btnConvertToRelative.UseVisualStyleBackColor = true;
+        btnConvertToRelative.Click += btnConvertToRelative_Click;
+        // 
+        // lblConvertMethod
+        // 
+        lblConvertMethod.AutoSize = true;
+        lblConvertMethod.Location = new Point(12, 195);
+        lblConvertMethod.Name = "lblConvertMethod";
+        lblConvertMethod.Size = new Size(110, 15);
+        lblConvertMethod.TabIndex = 11;
+        lblConvertMethod.Text = "Converting method :";
+        // 
+        // udConvertMethod
+        // 
+        udConvertMethod.Location = new Point(128, 193);
+        udConvertMethod.Name = "udConvertMethod";
+        udConvertMethod.Size = new Size(80, 23);
+        udConvertMethod.TabIndex = 12;
+        // 
+        // lblRefPosVar
+        // 
+        lblRefPosVar.AutoSize = true;
+        lblRefPosVar.Location = new Point(12, 224);
+        lblRefPosVar.Name = "lblRefPosVar";
+        lblRefPosVar.Size = new Size(105, 15);
+        lblRefPosVar.TabIndex = 13;
+        lblRefPosVar.Text = "Reference pos. var :";
+        // 
+        // udRefPosVar
+        // 
+        udRefPosVar.Location = new Point(128, 222);
+        udRefPosVar.Name = "udRefPosVar";
+        udRefPosVar.Size = new Size(80, 23);
+        udRefPosVar.TabIndex = 14;
+        // 
+        // btnConvertToStandard
+        // 
+        btnConvertToStandard.Location = new Point(218, 220);
+        btnConvertToStandard.Name = "btnConvertToStandard";
+        btnConvertToStandard.Size = new Size(190, 23);
+        btnConvertToStandard.TabIndex = 15;
+        btnConvertToStandard.Text = "Convert to standard job";
+        btnConvertToStandard.UseVisualStyleBackColor = true;
+        btnConvertToStandard.Click += btnConvertToStandard_Click;
+        // 
         // protocolSelector
         // 
         protocolSelector.Dock = DockStyle.Top;
@@ -268,6 +459,7 @@ partial class JobControl
         AutoScaleMode = AutoScaleMode.Font;
         AutoScroll = true;
         Controls.Add(protocolSelector);
+        Controls.Add(groupBoxHostControl);
         Controls.Add(groupBox1);
         Controls.Add(panel1);
         Controls.Add(gridExecuting);
@@ -283,6 +475,11 @@ partial class JobControl
         groupBox1.ResumeLayout(false);
         groupBox1.PerformLayout();
         ((System.ComponentModel.ISupportInitialize)udTaskId).EndInit();
+        groupBoxHostControl.ResumeLayout(false);
+        groupBoxHostControl.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)udTimeout).EndInit();
+        ((System.ComponentModel.ISupportInitialize)udConvertMethod).EndInit();
+        ((System.ComponentModel.ISupportInitialize)udRefPosVar).EndInit();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -308,5 +505,22 @@ partial class JobControl
     private Button btnGetCallStack;
     private Label label1;
     private NumericUpDown udTaskId;
+    private GroupBox groupBoxHostControl;
+    private TextBox txtJobName;
+    private Label lblJobName;
+    private Button btnGetJobDirectory;
+    private Button btnDeleteJob;
+    private Button btnSetMasterJob;
+    private Button btnWaitCompletion;
+    private NumericUpDown udTimeout;
+    private Label lblTimeout;
+    private Button btnConvertToRelative;
+    private Button btnConvertToStandard;
+    private ComboBox cbCoordSystem;
+    private Label lblCoordSystem;
+    private NumericUpDown udConvertMethod;
+    private Label lblConvertMethod;
+    private NumericUpDown udRefPosVar;
+    private Label lblRefPosVar;
     private ProtocolSelector protocolSelector;
 }

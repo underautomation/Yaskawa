@@ -49,6 +49,10 @@ public partial class VariableControl : UserControl, IUserControl, ISelectableCon
         btnWriteRegister.Enabled = isHses && grid.SelectedObject is short[];
         btnReadPositionVariable.Enabled = isHses;
         btnWritePositionVariable.Enabled = isHses && grid.SelectedObject is RobotPositionIntData[];
+        btnReadBasePosition.Enabled = isHses;
+        btnWriteBasePosition.Enabled = isHses && grid.SelectedObject is RobotBasePositionData[];
+        btnReadExternalPosition.Enabled = isHses;
+        btnWriteExternalPosition.Enabled = isHses && grid.SelectedObject is RobotExternalAxisData[];
     }
     #endregion
 
@@ -128,6 +132,30 @@ public partial class VariableControl : UserControl, IUserControl, ISelectableCon
     private void btnWritePositionVariable_Click(object sender, EventArgs e)
     {
         Robot.HighSpeedEServer.WritePositionVariable((int)nudIndex.Value, (RobotPositionIntData[])grid.SelectedObject);
+    }
+
+    private void btnReadBasePosition_Click(object sender, EventArgs e)
+    {
+        var data = Robot.HighSpeedEServer.ReadBasePosition((int)nudIndex.Value, (int)nudCount.Value);
+        grid.SelectedObject = data.Value;
+        grid.ExpandAllGridItems();
+    }
+
+    private void btnWriteBasePosition_Click(object sender, EventArgs e)
+    {
+        Robot.HighSpeedEServer.WriteBasePosition((int)nudIndex.Value, (RobotBasePositionData[])grid.SelectedObject);
+    }
+
+    private void btnReadExternalPosition_Click(object sender, EventArgs e)
+    {
+        var data = Robot.HighSpeedEServer.ReadExternalPosition((int)nudIndex.Value, (int)nudCount.Value);
+        grid.SelectedObject = data.Value;
+        grid.ExpandAllGridItems();
+    }
+
+    private void btnWriteExternalPosition_Click(object sender, EventArgs e)
+    {
+        Robot.HighSpeedEServer.WriteExternalPosition((int)nudIndex.Value, (RobotExternalAxisData[])grid.SelectedObject);
     }
 
 }

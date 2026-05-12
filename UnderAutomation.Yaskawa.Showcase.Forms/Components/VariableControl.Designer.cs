@@ -46,6 +46,10 @@ partial class VariableControl
         btnWrite32Char = new Button();
         btnReadPositionVariable = new Button();
         btnWritePositionVariable = new Button();
+        btnReadBasePosition = new Button();
+        btnWriteBasePosition = new Button();
+        btnReadExternalPosition = new Button();
+        btnWriteExternalPosition = new Button();
         protocolSelector = new ProtocolSelector();
         ((System.ComponentModel.ISupportInitialize)nudIndex).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudCount).BeginInit();
@@ -235,6 +239,46 @@ partial class VariableControl
         btnWritePositionVariable.UseVisualStyleBackColor = true;
         btnWritePositionVariable.Click += btnWritePositionVariable_Click;
         // 
+        // btnReadBasePosition
+        // 
+        btnReadBasePosition.Location = new Point(777, 34);
+        btnReadBasePosition.Name = "btnReadBasePosition";
+        btnReadBasePosition.Size = new Size(95, 23);
+        btnReadBasePosition.TabIndex = 18;
+        btnReadBasePosition.Text = "Read Base Pos";
+        btnReadBasePosition.UseVisualStyleBackColor = true;
+        btnReadBasePosition.Click += btnReadBasePosition_Click;
+        // 
+        // btnWriteBasePosition
+        // 
+        btnWriteBasePosition.Location = new Point(777, 63);
+        btnWriteBasePosition.Name = "btnWriteBasePosition";
+        btnWriteBasePosition.Size = new Size(95, 23);
+        btnWriteBasePosition.TabIndex = 19;
+        btnWriteBasePosition.Text = "Write Base Pos";
+        btnWriteBasePosition.UseVisualStyleBackColor = true;
+        btnWriteBasePosition.Click += btnWriteBasePosition_Click;
+        // 
+        // btnReadExternalPosition
+        // 
+        btnReadExternalPosition.Location = new Point(875, 34);
+        btnReadExternalPosition.Name = "btnReadExternalPosition";
+        btnReadExternalPosition.Size = new Size(95, 23);
+        btnReadExternalPosition.TabIndex = 20;
+        btnReadExternalPosition.Text = "Read Ext Axis";
+        btnReadExternalPosition.UseVisualStyleBackColor = true;
+        btnReadExternalPosition.Click += btnReadExternalPosition_Click;
+        // 
+        // btnWriteExternalPosition
+        // 
+        btnWriteExternalPosition.Location = new Point(875, 63);
+        btnWriteExternalPosition.Name = "btnWriteExternalPosition";
+        btnWriteExternalPosition.Size = new Size(95, 23);
+        btnWriteExternalPosition.TabIndex = 21;
+        btnWriteExternalPosition.Text = "Write Ext Axis";
+        btnWriteExternalPosition.UseVisualStyleBackColor = true;
+        btnWriteExternalPosition.Click += btnWriteExternalPosition_Click;
+        // 
         // protocolSelector
         // 
         protocolSelector.Dock = DockStyle.Top;
@@ -246,6 +290,10 @@ partial class VariableControl
         // VariableControl
         // 
         Controls.Add(protocolSelector);
+        Controls.Add(btnWriteExternalPosition);
+        Controls.Add(btnReadExternalPosition);
+        Controls.Add(btnWriteBasePosition);
+        Controls.Add(btnReadBasePosition);
         Controls.Add(btnWritePositionVariable);
         Controls.Add(btnReadPositionVariable);
         Controls.Add(btnWrite32Char);
@@ -294,5 +342,9 @@ partial class VariableControl
     private Button btnWrite32Char;
     private Button btnReadPositionVariable;
     private Button btnWritePositionVariable;
+    private Button btnReadBasePosition;
+    private Button btnWriteBasePosition;
+    private Button btnReadExternalPosition;
+    private Button btnWriteExternalPosition;
     private ProtocolSelector protocolSelector;
 }

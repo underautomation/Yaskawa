@@ -71,6 +71,9 @@ public partial class FileControl : UserControl, IUserControl, ISelectableControl
         var isHses = SelectedProtocol == Robot.HighSpeedEServer;
         btnBackup.Enabled = isHses;
         btnDownloadCmos.Enabled = isHses && btnDownloadCmos.Enabled;
+        var isFtp = SelectedProtocol == Robot.Ftp;
+        btnFtpUpload.Enabled = isFtp;
+        btnFtpDownload.Enabled = isFtp;
     }
     #endregion
 
@@ -201,6 +204,70 @@ public partial class FileControl : UserControl, IUserControl, ISelectableControl
         {
             lblProgress.Visible = false;
             Cursor = Cursors.Default;
+        }
+    }
+
+    private void btnFtpUpload_Click(object sender, EventArgs e)
+    {
+        using (var dlg = new OpenFileDialog { Multiselect = true, Title = "Select files to upload to controller" })
+        {
+            if (dlg.ShowDialog() != DialogResult.OK) return;
+
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                Robot.Ftp.UploadFilesToController(dlg.FileNames, "/", progress =>
+                {
+                    lblProgress.Visible = true;
+                    lblProgress.Text = $"Uploading... {progress * 100:0.0} %";
+                    Application.DoEvents();
+                });
+
+                UpdateList();
+            }
+            finally
+            {
+                lblProgress.Visible = false;
+                Cursor = Cursors.Default;
+            }
+        }
+    }
+
+    private void btnFtpDownload_Click(object sender, EventArgs e)
+    {
+        var selected = lstFolder.SelectedItems.OfType<ListViewItem>().Select(i => i.Text).ToArray();
+        if (selected.Length == 0)
+        {
+            MessageBox.Show("Please select one or more files in the list first.", "FTP download", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+
+        using (var dlg = new FolderBrowserDialog { Description = "Select destination folder" })
+        {
+            if (dlg.ShowDialog() != DialogResult.OK) return;
+
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                var written = Robot.Ftp.DownloadFilesFromController(dlg.SelectedPath, selected, progress =>
+                {
+                    lblProgress.Visible = true;
+                    lblProgress.Text = $"Downloading... {progress * 100:0.0} %";
+                    Application.DoEvents();
+                });
+
+                if (written.Length > 0)
+                {
+                    Explorer.RevealFile(written[0]);
+                }
+            }
+            finally
+            {
+                lblProgress.Visible = false;
+                Cursor = Cursors.Default;
+            }
         }
     }
 }

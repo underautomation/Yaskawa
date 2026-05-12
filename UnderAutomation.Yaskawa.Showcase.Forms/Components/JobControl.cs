@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using UnderAutomation.Yaskawa;
 using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
+using UnderAutomation.Yaskawa.HostControl;
+using UnderAutomation.Yaskawa.HostControl.Internal;
 
 public partial class JobControl : UserControl, IUserControl, ISelectableControl<IRobotControl>
 {
@@ -23,6 +25,11 @@ public partial class JobControl : UserControl, IUserControl, ISelectableControl<
     {
         _robot = Yaskawa;
         InitializeComponent();
+
+        foreach (var coord in Enum.GetValues(typeof(HostControlCoordinateSystem)))
+            cbCoordSystem.Items.Add(coord);
+        cbCoordSystem.SelectedIndex = 0;
+
         protocolSelector.Initialize(this);
     }
 
@@ -51,6 +58,15 @@ public partial class JobControl : UserControl, IUserControl, ISelectableControl<
             gridStatus.SelectedObject = statusReader.GetStatusInformation();
         }
         btnGetCallStack.Enabled = SelectedProtocol == Robot.HighSpeedEServer;
+
+        var hostControl = SelectedProtocol as HostControlClientBase;
+        btnGetJobDirectory.Enabled = hostControl != null;
+        btnDeleteJob.Enabled = hostControl != null;
+        btnSetMasterJob.Enabled = hostControl != null;
+        btnWaitCompletion.Enabled = hostControl != null;
+        btnConvertToRelative.Enabled = hostControl != null;
+        btnConvertToStandard.Enabled = hostControl != null;
+        cbCoordSystem.Enabled = hostControl != null;
     }
 
     #endregion
@@ -104,5 +120,37 @@ public partial class JobControl : UserControl, IUserControl, ISelectableControl<
         RobotJobStackData stack = Robot.HighSpeedEServer.GetJobStack((int)udTaskId.Value);
 
         txtCallStack.Text = string.Join(Environment.NewLine, stack.Jobs);
+    }
+
+    private void btnGetJobDirectory_Click(object sender, EventArgs e)
+    {
+        var data = ((HostControlClientBase)SelectedProtocol).GetJobDirectory(string.IsNullOrEmpty(txtJobName.Text) ? "*" : txtJobName.Text);
+        txtCallStack.Text = data?.JobNames == null ? string.Empty : string.Join(Environment.NewLine, data.JobNames);
+    }
+
+    private void btnDeleteJob_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).DeleteJob(txtJobName.Text);
+    }
+
+    private void btnSetMasterJob_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).SetMasterJob(txtJobName.Text);
+    }
+
+    private void btnWaitCompletion_Click(object sender, EventArgs e)
+    {
+        var done = ((HostControlClientBase)SelectedProtocol).WaitForJobCompletion((int)udTimeout.Value);
+        txtCallStack.Text = $"Job completion : {done}";
+    }
+
+    private void btnConvertToRelative_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).ConvertToRelativeJob(txtJobName.Text, (HostControlCoordinateSystem)cbCoordSystem.SelectedItem);
+    }
+
+    private void btnConvertToStandard_Click(object sender, EventArgs e)
+    {
+        ((HostControlClientBase)SelectedProtocol).ConvertToStandardJob(txtJobName.Text, (int)udConvertMethod.Value, (int)udRefPosVar.Value);
     }
 }
