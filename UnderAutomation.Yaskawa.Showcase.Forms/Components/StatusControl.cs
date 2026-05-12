@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
 
-public partial class StatusControl : UserControl, IUserControl
+public partial class StatusControl : UserControl, IUserControl, ISelectableControl<IRobotClient>
 {
     static StatusControl()
     {
@@ -18,15 +19,18 @@ public partial class StatusControl : UserControl, IUserControl
 
     YaskawaRobot _robot;
 
+    public IRobotClient SelectedProtocol { get; set; }
+    public YaskawaRobot Robot { get => _robot; set => _robot = value; }
 
     public StatusControl(YaskawaRobot Yaskawa)
     {
         _robot = Yaskawa;
         InitializeComponent();
+        protocolSelector.Initialize(this);
     }
 
     #region IUserControl
-    public bool FeatureEnabled => _robot.HighSpeedEServer.Connected;
+    public bool FeatureEnabled => SelectedProtocol?.Connected ?? false;
 
     public string Title => "Status";
 
@@ -41,7 +45,10 @@ public partial class StatusControl : UserControl, IUserControl
 
         if (!worker.CancellationPending) worker.RunWorkerAsync();
 
-        gridInfo.SelectedObject = _robot.HighSpeedEServer.GetSystemInformation();
+        if (SelectedProtocol == Robot.HighSpeedEServer)
+            gridInfo.SelectedObject = Robot.HighSpeedEServer.GetSystemInformation();
+        else
+            gridInfo.SelectedObject = null;
     }
 
     public void PeriodicUpdate()
@@ -56,22 +63,25 @@ public partial class StatusControl : UserControl, IUserControl
         {
             try
             {
-                var jobInformation = _robot.HighSpeedEServer.GetExecutingJobInformation();
-                var status = _robot.HighSpeedEServer.GetStatusInformation();
+                var jobInformation = SelectedProtocol.GetExecutingJobInformation();
+                var status = SelectedProtocol.GetStatusInformation();
 
-                var time = new ManagementTime();
+                var time = SelectedProtocol == Robot.HighSpeedEServer ? new ManagementTime() : null;
 
-                time.ControlPowerOnTime = GetManagementTime(ManagementTimeType.ControlPowerOnTime);
-                time.ServoPowerOnTimeTotal = GetManagementTime(ManagementTimeType.ServoPowerOnTimeTotal);
-                time.ServoPowerOnTimR1ToR8 = GetManagementTime(ManagementTimeType.ServoPowerOnTimR1ToR8);
-                time.ServoPowerOnTimeS1ToS24 = GetManagementTime(ManagementTimeType.ServoPowerOnTimeS1ToS24);
-                time.PlayBackTimeTotal = GetManagementTime(ManagementTimeType.PlayBackTimeTotal);
-                time.PlayBackTimeR1ToR8 = GetManagementTime(ManagementTimeType.PlayBackTimeR1ToR8);
-                time.PlayBackTimeS1ToS24 = GetManagementTime(ManagementTimeType.PlayBackTimeS1ToS24);
-                time.MotionTimeTotal = GetManagementTime(ManagementTimeType.MotionTimeTotal);
-                time.MotionTimeR1ToR8 = GetManagementTime(ManagementTimeType.MotionTimeR1ToR8);
-                time.MotionTimeS1ToS24 = GetManagementTime(ManagementTimeType.MotionTimeS1ToS24);
-                time.OperationTimeApplication1To8 = GetManagementTime(ManagementTimeType.OperationTimeApplication1To8);
+                if (time != null)
+                {
+                    time.ControlPowerOnTime = GetManagementTime(ManagementTimeType.ControlPowerOnTime);
+                    time.ServoPowerOnTimeTotal = GetManagementTime(ManagementTimeType.ServoPowerOnTimeTotal);
+                    time.ServoPowerOnTimR1ToR8 = GetManagementTime(ManagementTimeType.ServoPowerOnTimR1ToR8);
+                    time.ServoPowerOnTimeS1ToS24 = GetManagementTime(ManagementTimeType.ServoPowerOnTimeS1ToS24);
+                    time.PlayBackTimeTotal = GetManagementTime(ManagementTimeType.PlayBackTimeTotal);
+                    time.PlayBackTimeR1ToR8 = GetManagementTime(ManagementTimeType.PlayBackTimeR1ToR8);
+                    time.PlayBackTimeS1ToS24 = GetManagementTime(ManagementTimeType.PlayBackTimeS1ToS24);
+                    time.MotionTimeTotal = GetManagementTime(ManagementTimeType.MotionTimeTotal);
+                    time.MotionTimeR1ToR8 = GetManagementTime(ManagementTimeType.MotionTimeR1ToR8);
+                    time.MotionTimeS1ToS24 = GetManagementTime(ManagementTimeType.MotionTimeS1ToS24);
+                    time.OperationTimeApplication1To8 = GetManagementTime(ManagementTimeType.OperationTimeApplication1To8);
+                }
 
                 this.Invoke(new Action(() =>
                 {
@@ -91,7 +101,7 @@ public partial class StatusControl : UserControl, IUserControl
     {
         try
         {
-            return _robot.HighSpeedEServer.GetManagementTime(time);
+            return Robot.HighSpeedEServer.GetManagementTime(time);
         }
         catch
         {

@@ -27,113 +27,122 @@ partial class StatusControl
     /// </summary>
     private void InitializeComponent()
     {
-            this.worker = new System.ComponentModel.BackgroundWorker();
-            this.gridExecuting = new System.Windows.Forms.PropertyGrid();
-            this.label3 = new System.Windows.Forms.Label();
-            this.gridStatus = new System.Windows.Forms.PropertyGrid();
-            this.label2 = new System.Windows.Forms.Label();
-            this.gridTime = new System.Windows.Forms.PropertyGrid();
-            this.gridInfo = new System.Windows.Forms.PropertyGrid();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
-            // 
-            // worker
-            // 
-            this.worker.WorkerSupportsCancellation = true;
-            this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.worker_DoWork);
-            // 
-            // gridExecuting
-            // 
-            this.gridExecuting.HelpVisible = false;
-            this.gridExecuting.Location = new System.Drawing.Point(18, 319);
-            this.gridExecuting.Name = "gridExecuting";
-            this.gridExecuting.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.gridExecuting.Size = new System.Drawing.Size(276, 96);
-            this.gridExecuting.TabIndex = 22;
-            this.gridExecuting.ToolbarVisible = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 303);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 13);
-            this.label3.TabIndex = 20;
-            this.label3.Text = "Executing job :";
-            // 
-            // gridStatus
-            // 
-            this.gridStatus.HelpVisible = false;
-            this.gridStatus.Location = new System.Drawing.Point(18, 29);
-            this.gridStatus.Name = "gridStatus";
-            this.gridStatus.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.gridStatus.Size = new System.Drawing.Size(276, 245);
-            this.gridStatus.TabIndex = 23;
-            this.gridStatus.ToolbarVisible = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 13);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "System status :";
-            // 
-            // gridTime
-            // 
-            this.gridTime.HelpVisible = false;
-            this.gridTime.Location = new System.Drawing.Point(323, 29);
-            this.gridTime.Name = "gridTime";
-            this.gridTime.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.gridTime.Size = new System.Drawing.Size(455, 487);
-            this.gridTime.TabIndex = 26;
-            this.gridTime.ToolbarVisible = false;
-            // 
-            // gridInfo
-            // 
-            this.gridInfo.HelpVisible = false;
-            this.gridInfo.Location = new System.Drawing.Point(20, 447);
-            this.gridInfo.Name = "gridInfo";
-            this.gridInfo.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.gridInfo.Size = new System.Drawing.Size(274, 69);
-            this.gridInfo.TabIndex = 27;
-            this.gridInfo.ToolbarVisible = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(320, 13);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(97, 13);
-            this.label4.TabIndex = 24;
-            this.label4.Text = "Management time :";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 431);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 13);
-            this.label1.TabIndex = 25;
-            this.label1.Text = "System information :";
-            // 
-            // StatusControl
-            // 
-            this.Controls.Add(this.gridTime);
-            this.Controls.Add(this.gridInfo);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.gridExecuting);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.gridStatus);
-            this.Controls.Add(this.label2);
-            this.Name = "StatusControl";
-            this.Size = new System.Drawing.Size(797, 647);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+        worker = new System.ComponentModel.BackgroundWorker();
+        gridExecuting = new PropertyGrid();
+        label3 = new Label();
+        gridStatus = new PropertyGrid();
+        label2 = new Label();
+        gridTime = new PropertyGrid();
+        gridInfo = new PropertyGrid();
+        label4 = new Label();
+        label1 = new Label();
+        protocolSelector = new ProtocolSelector();
+        SuspendLayout();
+        // 
+        // worker
+        // 
+        worker.WorkerSupportsCancellation = true;
+        worker.DoWork += worker_DoWork;
+        // 
+        // gridExecuting
+        // 
+        gridExecuting.HelpVisible = false;
+        gridExecuting.Location = new Point(24, 352);
+        gridExecuting.Name = "gridExecuting";
+        gridExecuting.PropertySort = PropertySort.Alphabetical;
+        gridExecuting.Size = new Size(276, 96);
+        gridExecuting.TabIndex = 22;
+        gridExecuting.ToolbarVisible = false;
+        // 
+        // label3
+        // 
+        label3.AutoSize = true;
+        label3.Location = new Point(21, 336);
+        label3.Name = "label3";
+        label3.Size = new Size(84, 15);
+        label3.TabIndex = 20;
+        label3.Text = "Executing job :";
+        // 
+        // gridStatus
+        // 
+        gridStatus.HelpVisible = false;
+        gridStatus.Location = new Point(24, 62);
+        gridStatus.Name = "gridStatus";
+        gridStatus.PropertySort = PropertySort.Alphabetical;
+        gridStatus.Size = new Size(276, 245);
+        gridStatus.TabIndex = 23;
+        gridStatus.ToolbarVisible = false;
+        // 
+        // label2
+        // 
+        label2.AutoSize = true;
+        label2.Location = new Point(21, 46);
+        label2.Name = "label2";
+        label2.Size = new Size(85, 15);
+        label2.TabIndex = 21;
+        label2.Text = "System status :";
+        // 
+        // gridTime
+        // 
+        gridTime.HelpVisible = false;
+        gridTime.Location = new Point(329, 62);
+        gridTime.Name = "gridTime";
+        gridTime.PropertySort = PropertySort.Alphabetical;
+        gridTime.Size = new Size(455, 487);
+        gridTime.TabIndex = 26;
+        gridTime.ToolbarVisible = false;
+        // 
+        // gridInfo
+        // 
+        gridInfo.HelpVisible = false;
+        gridInfo.Location = new Point(26, 480);
+        gridInfo.Name = "gridInfo";
+        gridInfo.PropertySort = PropertySort.Alphabetical;
+        gridInfo.Size = new Size(274, 69);
+        gridInfo.TabIndex = 27;
+        gridInfo.ToolbarVisible = false;
+        // 
+        // label4
+        // 
+        label4.AutoSize = true;
+        label4.Location = new Point(326, 46);
+        label4.Name = "label4";
+        label4.Size = new Size(111, 15);
+        label4.TabIndex = 24;
+        label4.Text = "Management time :";
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new Point(23, 464);
+        label1.Name = "label1";
+        label1.Size = new Size(117, 15);
+        label1.TabIndex = 25;
+        label1.Text = "System information :";
+        // 
+        // protocolSelector
+        // 
+        protocolSelector.Dock = DockStyle.Top;
+        protocolSelector.Location = new Point(0, 0);
+        protocolSelector.Name = "protocolSelector";
+        protocolSelector.Size = new Size(797, 30);
+        protocolSelector.TabIndex = 28;
+        // 
+        // StatusControl
+        // 
+        Controls.Add(protocolSelector);
+        Controls.Add(gridTime);
+        Controls.Add(gridInfo);
+        Controls.Add(label4);
+        Controls.Add(label1);
+        Controls.Add(gridExecuting);
+        Controls.Add(label3);
+        Controls.Add(gridStatus);
+        Controls.Add(label2);
+        Name = "StatusControl";
+        Size = new Size(797, 647);
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
@@ -147,4 +156,5 @@ partial class StatusControl
     private System.Windows.Forms.PropertyGrid gridInfo;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Label label1;
+    private ProtocolSelector protocolSelector;
 }

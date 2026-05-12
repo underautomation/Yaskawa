@@ -13,8 +13,6 @@ public partial class PositionControl : UserControl, ISelectableControl<IPosition
         TypeDescriptor.AddAttributes(typeof(RobotPosture), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
     }
 
-    public IPositionReader SelectedClient { get; set; }
-
     public IPositionReader SelectedProtocol {  get; set; }
     public YaskawaRobot Robot { get; set; }
 
@@ -27,7 +25,7 @@ public partial class PositionControl : UserControl, ISelectableControl<IPosition
     }
 
     #region IUserControl
-    public bool FeatureEnabled => SelectedClient.Connected;
+    public bool FeatureEnabled => SelectedProtocol.Connected;
 
     public string Title => "Current position";
 

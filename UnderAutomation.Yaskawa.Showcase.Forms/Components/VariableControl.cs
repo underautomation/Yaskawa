@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel;
 using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
 
-public partial class VariableControl : UserControl, IUserControl
+public partial class VariableControl : UserControl, IUserControl, ISelectableControl<IVariableAccess>
 {
     YaskawaRobot _robot;
 
+    public IVariableAccess SelectedProtocol { get; set; }
+    public YaskawaRobot Robot { get => _robot; set => _robot = value; }
 
     public VariableControl(YaskawaRobot Yaskawa)
     {
@@ -14,10 +17,11 @@ public partial class VariableControl : UserControl, IUserControl
         TypeDescriptor.AddAttributes(typeof(RobotPositionIntData), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
 
         InitializeComponent();
+        protocolSelector.Initialize(this);
     }
 
     #region IUserControl
-    public bool FeatureEnabled => _robot.HighSpeedEServer.Connected;
+    public bool FeatureEnabled => SelectedProtocol?.Connected ?? false;
 
     public string Title => "Variables";
 
@@ -39,87 +43,91 @@ public partial class VariableControl : UserControl, IUserControl
         btnWriteReal.Enabled = grid.SelectedObject is float[];
         btnWrite32Char.Enabled = grid.SelectedObject is string[];
         btnWritePositionVariable.Enabled = grid.SelectedObject is RobotPositionIntData[];
+
+        var isHses = SelectedProtocol == Robot.HighSpeedEServer;
+        btnReadRegister.Enabled = isHses;
+        btnWriteRegister.Enabled = isHses && grid.SelectedObject is short[];
+        btnReadPositionVariable.Enabled = isHses;
+        btnWritePositionVariable.Enabled = isHses && grid.SelectedObject is RobotPositionIntData[];
     }
     #endregion
 
-
-
     private void btnReadByte_Click(object sender, EventArgs e)
     {
-        var data = _robot.HighSpeedEServer.ReadByte((int)nudIndex.Value, (int)nudCount.Value);
-        grid.SelectedObject = data.Value;
+        var data = SelectedProtocol.ReadByte((int)nudIndex.Value, (int)nudCount.Value);
+        grid.SelectedObject = data;
     }
 
     private void btnWriteByte_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.WriteByte((int)nudIndex.Value, (byte[])grid.SelectedObject);
+        SelectedProtocol.WriteByte((int)nudIndex.Value, (byte[])grid.SelectedObject);
     }
 
     private void btnReadRegister_Click(object sender, EventArgs e)
     {
-        var data = _robot.HighSpeedEServer.ReadRegister((int)nudIndex.Value, (int)nudCount.Value);
+        var data = Robot.HighSpeedEServer.ReadRegister((int)nudIndex.Value, (int)nudCount.Value);
         grid.SelectedObject = data.Value;
     }
 
     private void btnWriteRegister_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.WriteRegister((int)nudIndex.Value, (short[])grid.SelectedObject);
+        Robot.HighSpeedEServer.WriteRegister((int)nudIndex.Value, (short[])grid.SelectedObject);
     }
 
     private void btnReadInteger_Click(object sender, EventArgs e)
     {
-        var data = _robot.HighSpeedEServer.ReadInteger((int)nudIndex.Value, (int)nudCount.Value);
-        grid.SelectedObject = data.Value;
+        var data = SelectedProtocol.ReadInteger((int)nudIndex.Value, (int)nudCount.Value);
+        grid.SelectedObject = data;
     }
 
     private void btnWriteInteger_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.WriteInteger((int)nudIndex.Value, (short[])grid.SelectedObject);
+        SelectedProtocol.WriteInteger((int)nudIndex.Value, (short[])grid.SelectedObject);
     }
 
     private void btnReadDouble_Click(object sender, EventArgs e)
     {
-        var data = _robot.HighSpeedEServer.ReadDoubleInteger((int)nudIndex.Value, (int)nudCount.Value);
-        grid.SelectedObject = data.Value;
+        var data = SelectedProtocol.ReadDoubleInteger((int)nudIndex.Value, (int)nudCount.Value);
+        grid.SelectedObject = data;
     }
 
     private void btnWriteDouble_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.WriteDoubleInteger((int)nudIndex.Value, (Int32[])grid.SelectedObject);
+        SelectedProtocol.WriteDoubleInteger((int)nudIndex.Value, (Int32[])grid.SelectedObject);
     }
 
     private void btnReadReal_Click(object sender, EventArgs e)
     {
-        var data = _robot.HighSpeedEServer.ReadReal((int)nudIndex.Value, (int)nudCount.Value);
-        grid.SelectedObject = data.Value;
+        var data = SelectedProtocol.ReadReal((int)nudIndex.Value, (int)nudCount.Value);
+        grid.SelectedObject = data;
     }
 
     private void btnWriteReal_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.WriteReal((int)nudIndex.Value, (float[])grid.SelectedObject);
+        SelectedProtocol.WriteReal((int)nudIndex.Value, (float[])grid.SelectedObject);
     }
 
     private void btnRead32Char_Click(object sender, EventArgs e)
     {
-        var data = _robot.HighSpeedEServer.Read32BytesChar((int)nudIndex.Value, (int)nudCount.Value);
-        grid.SelectedObject = data.Value;
+        var data = SelectedProtocol.Read16BytesChar((int)nudIndex.Value, (int)nudCount.Value);
+        grid.SelectedObject = data;
     }
 
     private void btnWrite32Char_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.Write32BytesChar((int)nudIndex.Value, (string[])grid.SelectedObject);
+        SelectedProtocol.Write16BytesChar((int)nudIndex.Value, (string[])grid.SelectedObject);
     }
 
     private void btnReadPositionVariable_Click(object sender, EventArgs e)
     {
-        var data = _robot.HighSpeedEServer.ReadPositionVariable((int)nudIndex.Value, (int)nudCount.Value);
+        var data = Robot.HighSpeedEServer.ReadPositionVariable((int)nudIndex.Value, (int)nudCount.Value);
         grid.SelectedObject = data.Value;
         grid.ExpandAllGridItems();
     }
 
     private void btnWritePositionVariable_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.WritePositionVariable((int)nudIndex.Value, (RobotPositionIntData[])grid.SelectedObject);
+        Robot.HighSpeedEServer.WritePositionVariable((int)nudIndex.Value, (RobotPositionIntData[])grid.SelectedObject);
     }
 
 }

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
 
-public partial class AlarmControl : UserControl, IUserControl
+public partial class AlarmControl : UserControl, IUserControl, ISelectableControl<IAlarmReader>
 {
     static AlarmControl()
     {
@@ -16,14 +16,18 @@ public partial class AlarmControl : UserControl, IUserControl
 
     YaskawaRobot _robot;
 
+    public IAlarmReader SelectedProtocol { get; set; }
+    public YaskawaRobot Robot { get => _robot; set => _robot = value; }
+
     public AlarmControl(YaskawaRobot Yaskawa)
     {
         _robot = Yaskawa;
         InitializeComponent();
+        protocolSelector.Initialize(this);
     }
 
     #region IUserControl
-    public bool FeatureEnabled => _robot.HighSpeedEServer.Connected;
+    public bool FeatureEnabled => SelectedProtocol?.Connected ?? false;
 
     public string Title => "Alarms and system info";
 
@@ -33,34 +37,27 @@ public partial class AlarmControl : UserControl, IUserControl
     {
         if (!FeatureEnabled) return;
 
-        // Get last 4 alarms
-        var alarms = new List<RobotAlarmData>();
-        for (var i = RobotRecentAlarm.Latest; i <= RobotRecentAlarm.FourthLatest; i++)
-        {
-            var alarm = _robot.HighSpeedEServer.GetAlarm(i);
-            alarms.Add(alarm);
-        }
+        var alarms = SelectedProtocol.GetActiveAlarms();
 
-        // Display alarms
         lstActiveAlarms.UpdateList(
             alarms,
             a => a.OccurringTime,
             a => a.Code,
-            a => a.Data,
-            a => a.Type,
-            a => a.Text
+            a => a.SubCode,
+            a => "",
+            a => a.Message
         );
     }
 
     public void PeriodicUpdate()
     {
-
+        btnReset.Enabled = SelectedProtocol is IRobotControl;
     }
     #endregion
 
     private void btnReset_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.AlarmReset(AlarmResetType.Reset);
+        ((IRobotControl)SelectedProtocol).AlarmReset();
         OnOpen();
     }
 

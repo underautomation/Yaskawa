@@ -47,6 +47,7 @@ partial class JobControl
         btnGetCallStack = new Button();
         label1 = new Label();
         udTaskId = new NumericUpDown();
+        protocolSelector = new ProtocolSelector();
         ((System.ComponentModel.ISupportInitialize)udJobLine).BeginInit();
         panel1.SuspendLayout();
         groupBox1.SuspendLayout();
@@ -56,7 +57,7 @@ partial class JobControl
         // gridExecuting
         // 
         gridExecuting.HelpVisible = false;
-        gridExecuting.Location = new Point(33, 362);
+        gridExecuting.Location = new Point(28, 394);
         gridExecuting.Margin = new Padding(4, 3, 4, 3);
         gridExecuting.Name = "gridExecuting";
         gridExecuting.Size = new Size(322, 107);
@@ -66,7 +67,7 @@ partial class JobControl
         // label3
         // 
         label3.AutoSize = true;
-        label3.Location = new Point(29, 344);
+        label3.Location = new Point(24, 376);
         label3.Margin = new Padding(4, 0, 4, 0);
         label3.Name = "label3";
         label3.Size = new Size(84, 15);
@@ -76,7 +77,7 @@ partial class JobControl
         // gridStatus
         // 
         gridStatus.HelpVisible = false;
-        gridStatus.Location = new Point(33, 37);
+        gridStatus.Location = new Point(28, 69);
         gridStatus.Margin = new Padding(4, 3, 4, 3);
         gridStatus.Name = "gridStatus";
         gridStatus.PropertySort = PropertySort.Alphabetical;
@@ -146,7 +147,7 @@ partial class JobControl
         // label2
         // 
         label2.AutoSize = true;
-        label2.Location = new Point(29, 18);
+        label2.Location = new Point(24, 50);
         label2.Margin = new Padding(4, 0, 4, 0);
         label2.Name = "label2";
         label2.Size = new Size(85, 15);
@@ -198,7 +199,7 @@ partial class JobControl
         panel1.Controls.Add(cbJobs);
         panel1.Controls.Add(btnSelect);
         panel1.Controls.Add(btnRefresh);
-        panel1.Location = new Point(397, 37);
+        panel1.Location = new Point(392, 69);
         panel1.Margin = new Padding(4, 3, 4, 3);
         panel1.Name = "panel1";
         panel1.Size = new Size(351, 432);
@@ -210,7 +211,7 @@ partial class JobControl
         groupBox1.Controls.Add(btnGetCallStack);
         groupBox1.Controls.Add(label1);
         groupBox1.Controls.Add(udTaskId);
-        groupBox1.Location = new Point(33, 497);
+        groupBox1.Location = new Point(28, 529);
         groupBox1.Name = "groupBox1";
         groupBox1.Size = new Size(337, 238);
         groupBox1.TabIndex = 21;
@@ -253,11 +254,20 @@ partial class JobControl
         udTaskId.Size = new Size(120, 23);
         udTaskId.TabIndex = 0;
         // 
+        // protocolSelector
+        // 
+        protocolSelector.Dock = DockStyle.Top;
+        protocolSelector.Location = new Point(0, 0);
+        protocolSelector.Name = "protocolSelector";
+        protocolSelector.Size = new Size(1062, 30);
+        protocolSelector.TabIndex = 22;
+        // 
         // JobControl
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         AutoScroll = true;
+        Controls.Add(protocolSelector);
         Controls.Add(groupBox1);
         Controls.Add(panel1);
         Controls.Add(gridExecuting);
@@ -298,4 +308,5 @@ partial class JobControl
     private Button btnGetCallStack;
     private Label label1;
     private NumericUpDown udTaskId;
+    private ProtocolSelector protocolSelector;
 }

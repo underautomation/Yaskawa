@@ -27,8 +27,10 @@ partial class ProtocolSelector
     /// </summary>
     private void InitializeComponent()
     {
+        components = new System.ComponentModel.Container();
         cbProtocol = new ComboBox();
         label1 = new Label();
+        tmrConnected = new System.Windows.Forms.Timer(components);
         SuspendLayout();
         // 
         // cbProtocol
@@ -39,7 +41,6 @@ partial class ProtocolSelector
         cbProtocol.Name = "cbProtocol";
         cbProtocol.Size = new Size(247, 23);
         cbProtocol.TabIndex = 0;
-        cbProtocol.SelectedValueChanged += cbProtocol_SelectedValueChanged;
         // 
         // label1
         // 
@@ -49,6 +50,12 @@ partial class ProtocolSelector
         label1.TabIndex = 1;
         label1.Text = "Protocol:";
         label1.TextAlign = ContentAlignment.MiddleRight;
+        // 
+        // tmrConnected
+        // 
+        tmrConnected.Enabled = true;
+        tmrConnected.Interval = 1000;
+        tmrConnected.Tick += tmrConnected_Tick;
         // 
         // ProtocolSelector
         // 
@@ -62,4 +69,5 @@ partial class ProtocolSelector
     #endregion
     private ComboBox cbProtocol;
     private Label label1;
+    private System.Windows.Forms.Timer tmrConnected;
 }

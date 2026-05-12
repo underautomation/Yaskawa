@@ -27,123 +27,134 @@ partial class AlarmControl
     /// </summary>
     private void InitializeComponent()
     {
-            this.lstActiveAlarms = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnReset = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // lstActiveAlarms
-            // 
-            this.lstActiveAlarms.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
-            this.lstActiveAlarms.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lstActiveAlarms.HideSelection = false;
-            this.lstActiveAlarms.Location = new System.Drawing.Point(0, 45);
-            this.lstActiveAlarms.Name = "lstActiveAlarms";
-            this.lstActiveAlarms.Size = new System.Drawing.Size(702, 176);
-            this.lstActiveAlarms.TabIndex = 0;
-            this.lstActiveAlarms.UseCompatibleStateImageBehavior = false;
-            this.lstActiveAlarms.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Occuring time";
-            this.columnHeader1.Width = 120;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Code";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Data";
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Type";
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Text";
-            this.columnHeader5.Width = 500;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(702, 45);
-            this.panel1.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(702, 45);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Active alarms";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.btnRefresh);
-            this.panel2.Controls.Add(this.btnReset);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 221);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(702, 52);
-            this.panel2.TabIndex = 2;
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(180, 6);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(153, 23);
-            this.btnRefresh.TabIndex = 6;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(3, 6);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(153, 23);
-            this.btnReset.TabIndex = 0;
-            this.btnReset.Text = "Reset alarms";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // AlarmControl
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.lstActiveAlarms);
-            this.Controls.Add(this.panel1);
-            this.Name = "AlarmControl";
-            this.Size = new System.Drawing.Size(702, 584);
-            this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+        lstActiveAlarms = new ListView();
+        columnHeader1 = new ColumnHeader();
+        columnHeader2 = new ColumnHeader();
+        columnHeader3 = new ColumnHeader();
+        columnHeader4 = new ColumnHeader();
+        columnHeader5 = new ColumnHeader();
+        panel1 = new Panel();
+        label1 = new Label();
+        panel2 = new Panel();
+        btnRefresh = new Button();
+        btnReset = new Button();
+        protocolSelector = new ProtocolSelector();
+        panel1.SuspendLayout();
+        panel2.SuspendLayout();
+        SuspendLayout();
+        // 
+        // lstActiveAlarms
+        // 
+        lstActiveAlarms.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
+        lstActiveAlarms.Dock = DockStyle.Top;
+        lstActiveAlarms.Location = new Point(0, 87);
+        lstActiveAlarms.Margin = new Padding(4, 3, 4, 3);
+        lstActiveAlarms.Name = "lstActiveAlarms";
+        lstActiveAlarms.Size = new Size(819, 202);
+        lstActiveAlarms.TabIndex = 0;
+        lstActiveAlarms.UseCompatibleStateImageBehavior = false;
+        lstActiveAlarms.View = View.Details;
+        // 
+        // columnHeader1
+        // 
+        columnHeader1.Text = "Occuring time";
+        columnHeader1.Width = 120;
+        // 
+        // columnHeader2
+        // 
+        columnHeader2.Text = "Code";
+        // 
+        // columnHeader3
+        // 
+        columnHeader3.Text = "Data";
+        // 
+        // columnHeader4
+        // 
+        columnHeader4.Text = "Type";
+        // 
+        // columnHeader5
+        // 
+        columnHeader5.Text = "Text";
+        columnHeader5.Width = 500;
+        // 
+        // panel1
+        // 
+        panel1.Controls.Add(label1);
+        panel1.Dock = DockStyle.Top;
+        panel1.Location = new Point(0, 35);
+        panel1.Margin = new Padding(4, 3, 4, 3);
+        panel1.Name = "panel1";
+        panel1.Size = new Size(819, 52);
+        panel1.TabIndex = 1;
+        // 
+        // label1
+        // 
+        label1.Dock = DockStyle.Fill;
+        label1.Location = new Point(0, 0);
+        label1.Margin = new Padding(4, 0, 4, 0);
+        label1.Name = "label1";
+        label1.Size = new Size(819, 52);
+        label1.TabIndex = 0;
+        label1.Text = "Active alarms";
+        label1.TextAlign = ContentAlignment.MiddleCenter;
+        // 
+        // panel2
+        // 
+        panel2.Controls.Add(btnRefresh);
+        panel2.Controls.Add(btnReset);
+        panel2.Dock = DockStyle.Top;
+        panel2.Location = new Point(0, 289);
+        panel2.Margin = new Padding(4, 3, 4, 3);
+        panel2.Name = "panel2";
+        panel2.Size = new Size(819, 60);
+        panel2.TabIndex = 2;
+        // 
+        // btnRefresh
+        // 
+        btnRefresh.Location = new Point(210, 7);
+        btnRefresh.Margin = new Padding(4, 3, 4, 3);
+        btnRefresh.Name = "btnRefresh";
+        btnRefresh.Size = new Size(178, 27);
+        btnRefresh.TabIndex = 6;
+        btnRefresh.Text = "Refresh";
+        btnRefresh.UseVisualStyleBackColor = true;
+        btnRefresh.Click += btnRefresh_Click;
+        // 
+        // btnReset
+        // 
+        btnReset.Location = new Point(4, 7);
+        btnReset.Margin = new Padding(4, 3, 4, 3);
+        btnReset.Name = "btnReset";
+        btnReset.Size = new Size(178, 27);
+        btnReset.TabIndex = 0;
+        btnReset.Text = "Reset alarms";
+        btnReset.UseVisualStyleBackColor = true;
+        btnReset.Click += btnReset_Click;
+        // 
+        // protocolSelector
+        // 
+        protocolSelector.Dock = DockStyle.Top;
+        protocolSelector.Location = new Point(0, 0);
+        protocolSelector.Margin = new Padding(4, 3, 4, 3);
+        protocolSelector.Name = "protocolSelector";
+        protocolSelector.Size = new Size(819, 35);
+        protocolSelector.TabIndex = 3;
+        // 
+        // AlarmControl
+        // 
+        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleMode = AutoScaleMode.Font;
+        AutoScroll = true;
+        Controls.Add(panel2);
+        Controls.Add(lstActiveAlarms);
+        Controls.Add(panel1);
+        Controls.Add(protocolSelector);
+        Margin = new Padding(4, 3, 4, 3);
+        Name = "AlarmControl";
+        Size = new Size(819, 674);
+        panel1.ResumeLayout(false);
+        panel2.ResumeLayout(false);
+        ResumeLayout(false);
     }
 
     #endregion
@@ -158,5 +169,5 @@ partial class AlarmControl
     private System.Windows.Forms.Panel panel2;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Button btnReset;
-    private System.Windows.Forms.Button btnRefresh;
+    private System.Windows.Forms.Button btnRefresh; private ProtocolSelector protocolSelector;
 }

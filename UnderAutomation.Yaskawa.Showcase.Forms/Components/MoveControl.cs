@@ -1,10 +1,14 @@
 ﻿using System.Windows.Forms;
 using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
 
-public partial class MoveControl : UserControl, IUserControl
+public partial class MoveControl : UserControl, IUserControl, ISelectableControl<IMotionControl>
 {
     YaskawaRobot _robot;
+
+    public IMotionControl SelectedProtocol { get; set; }
+    public YaskawaRobot Robot { get => _robot; set => _robot = value; }
 
     private readonly int[] _joints = new int[8];
 
@@ -27,10 +31,12 @@ public partial class MoveControl : UserControl, IUserControl
 
         gridJoints.SelectedObject = _joints;
         gridPosture.SelectedObject = new RobotPosture();
+
+        protocolSelector.Initialize(this);
     }
 
     #region IUserControl
-    public bool FeatureEnabled => _robot.HighSpeedEServer.Connected;
+    public bool FeatureEnabled => SelectedProtocol?.Connected ?? false;
 
     public string Title => "Move robot";
 
@@ -45,22 +51,29 @@ public partial class MoveControl : UserControl, IUserControl
 
     public void PeriodicUpdate()
     {
+        var supportsRobotControl = SelectedProtocol is IRobotControl;
+        btnServoOn.Enabled = supportsRobotControl;
+        btnServoOff.Enabled = supportsRobotControl;
+        btnStop.Enabled = supportsRobotControl;
 
+        var supportsPosition = SelectedProtocol is IPositionReader;
+        btnCopyJoint.Enabled = supportsPosition;
+        btnCopyCartesian.Enabled = supportsPosition;
     }
     #endregion
 
-
-
     private void btnMoveJoints_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.MoveJoints(_joints, PositionCommandClassification.LinkPercent, (double)nudSpeedJoint.Value, PositionCommandType.LinkAbsolute, RobotControlGroup: 1, StationControlGroup: 0);
+        SelectedProtocol.MoveJoints(_joints, (double)nudSpeedJoint.Value);
     }
 
     private void btnMoveCartesian_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.MoveCartesian((double)nudX.Value, (double)nudY.Value, (double)nudZ.Value, (double)nudRx.Value, (double)nudRy.Value, (double)nudRz.Value,
-            (PositionCommandClassification)cbUnit.SelectedIndex, (double)nudSpeedCartesian.Value, (PositionCommandOperationCoordinate)cbFrame.SelectedItem, (RobotPosture)gridPosture.SelectedObject, (PositionCommandType)cbCartesianCommandType.SelectedItem,
-            tool: (int)nudTool.Value, userCoordinate: (int)nudUserCoordinate.Value);
+        SelectedProtocol.MoveCartesian(
+            (double)nudX.Value, (double)nudY.Value, (double)nudZ.Value,
+            (double)nudRx.Value, (double)nudRy.Value, (double)nudRz.Value,
+            (double)nudSpeedCartesian.Value,
+            tool: (int)nudTool.Value);
     }
 
     private void cbFrame_SelectedIndexChanged(object sender, EventArgs e)
@@ -70,17 +83,17 @@ public partial class MoveControl : UserControl, IUserControl
 
     private void btnServoOn_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.ServoCommand(OnOffCommandType.Servo, true);
+        ((IRobotControl)SelectedProtocol).SetServo(true);
     }
 
     private void btnServoOff_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.ServoCommand(OnOffCommandType.Servo, false);
+        ((IRobotControl)SelectedProtocol).SetServo(false);
     }
 
     private void btnCopyJoint_Click(object sender, EventArgs e)
     {
-        int[] axes = _robot.HighSpeedEServer.GetRobotJointPosition().Axes;
+        int[] axes = ((IPositionReader)SelectedProtocol).GetRobotJointPosition().Axes;
 
         for (int i = 0; i < axes.Length; i++)
             _joints[i] = axes[i];
@@ -90,7 +103,7 @@ public partial class MoveControl : UserControl, IUserControl
 
     private void btnCopyCartesian_Click(object sender, EventArgs e)
     {
-        RobotPositionCartesianData position = _robot.HighSpeedEServer.GetRobotCartesianPosition();
+        ICartesianPosition position = ((IPositionReader)SelectedProtocol).GetRobotCartesianPosition();
 
         nudX.Value = (decimal)position.X;
         nudY.Value = (decimal)position.Y;
@@ -98,16 +111,12 @@ public partial class MoveControl : UserControl, IUserControl
         nudRx.Value = (decimal)position.Rx;
         nudRy.Value = (decimal)position.Ry;
         nudRz.Value = (decimal)position.Rz;
-
-        gridPosture.SelectedObject = position.Form;
-
-        nudTool.Value = position.ToolNumber;
-        nudUserCoordinate.Value = position.UserCoordinateNumber;
     }
 
     private void btnStop_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.ServoCommand(OnOffCommandType.Hold, true);
-        _robot.HighSpeedEServer.ServoCommand(OnOffCommandType.Hold, false);
+        var ctrl = (IRobotControl)SelectedProtocol;
+        ctrl.SetHold(true);
+        ctrl.SetHold(false);
     }
 }

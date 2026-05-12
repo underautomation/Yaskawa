@@ -46,6 +46,7 @@ partial class VariableControl
         btnWrite32Char = new Button();
         btnReadPositionVariable = new Button();
         btnWritePositionVariable = new Button();
+        protocolSelector = new ProtocolSelector();
         ((System.ComponentModel.ISupportInitialize)nudIndex).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudCount).BeginInit();
         SuspendLayout();
@@ -234,8 +235,17 @@ partial class VariableControl
         btnWritePositionVariable.UseVisualStyleBackColor = true;
         btnWritePositionVariable.Click += btnWritePositionVariable_Click;
         // 
+        // protocolSelector
+        // 
+        protocolSelector.Dock = DockStyle.Top;
+        protocolSelector.Location = new Point(0, 0);
+        protocolSelector.Name = "protocolSelector";
+        protocolSelector.Size = new Size(1000, 30);
+        protocolSelector.TabIndex = 28;
+        // 
         // VariableControl
         // 
+        Controls.Add(protocolSelector);
         Controls.Add(btnWritePositionVariable);
         Controls.Add(btnReadPositionVariable);
         Controls.Add(btnWrite32Char);
@@ -284,4 +294,5 @@ partial class VariableControl
     private Button btnWrite32Char;
     private Button btnReadPositionVariable;
     private Button btnWritePositionVariable;
+    private ProtocolSelector protocolSelector;
 }

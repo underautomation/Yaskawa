@@ -3,9 +3,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
 
-public partial class JobControl : UserControl, IUserControl
+public partial class JobControl : UserControl, IUserControl, ISelectableControl<IRobotControl>
 {
     static JobControl()
     {
@@ -15,14 +16,18 @@ public partial class JobControl : UserControl, IUserControl
 
     YaskawaRobot _robot;
 
+    public IRobotControl SelectedProtocol { get; set; }
+    public YaskawaRobot Robot { get => _robot; set => _robot = value; }
+
     public JobControl(YaskawaRobot Yaskawa)
     {
         _robot = Yaskawa;
         InitializeComponent();
+        protocolSelector.Initialize(this);
     }
 
     #region IUserControl
-    public bool FeatureEnabled => _robot.HighSpeedEServer.Connected;
+    public bool FeatureEnabled => SelectedProtocol?.Connected ?? false;
 
     public string Title => "Job";
 
@@ -39,15 +44,20 @@ public partial class JobControl : UserControl, IUserControl
     public void PeriodicUpdate()
     {
         if (!FeatureEnabled) return;
-        gridExecuting.SelectedObject = _robot.HighSpeedEServer.GetExecutingJobInformation();
-        gridStatus.SelectedObject = _robot.HighSpeedEServer.GetStatusInformation();
+        var statusReader = SelectedProtocol as IStatusReader;
+        if (statusReader != null)
+        {
+            gridExecuting.SelectedObject = statusReader.GetExecutingJobInformation();
+            gridStatus.SelectedObject = statusReader.GetStatusInformation();
+        }
+        btnGetCallStack.Enabled = SelectedProtocol == Robot.HighSpeedEServer;
     }
 
     #endregion
 
     private void btnSelect_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.SelectJob(cbJobs.Text, (int)udJobLine.Value);
+        SelectedProtocol.SelectJob(cbJobs.Text, (int)udJobLine.Value);
     }
 
     private void btnRefresh_Click(object sender, EventArgs e)
@@ -59,7 +69,10 @@ public partial class JobControl : UserControl, IUserControl
     {
         if (!FeatureEnabled) return;
 
-        var files = _robot.HighSpeedEServer.GetFileList("*.JBI")?.Files;
+        var fileReader = SelectedProtocol as IFileReader;
+        if (fileReader is null) return;
+
+        var files = fileReader.GetFileList("*.JBI");
 
         if (files is null) return;
 
@@ -73,22 +86,22 @@ public partial class JobControl : UserControl, IUserControl
 
     private void btnStart_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.StartJob();
+        SelectedProtocol.StartJob();
     }
 
     private void btnServoOff_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.ServoCommand(OnOffCommandType.Servo, false);
+        SelectedProtocol.SetServo(false);
     }
 
     private void btnServoOn_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.ServoCommand(OnOffCommandType.Servo, true);
+        SelectedProtocol.SetServo(true);
     }
 
     private void btnGetCallStack_Click(object sender, EventArgs e)
     {
-        RobotJobStackData stack = _robot.HighSpeedEServer.GetJobStack((int)udTaskId.Value);
+        RobotJobStackData stack = Robot.HighSpeedEServer.GetJobStack((int)udTaskId.Value);
 
         txtCallStack.Text = string.Join(Environment.NewLine, stack.Jobs);
     }

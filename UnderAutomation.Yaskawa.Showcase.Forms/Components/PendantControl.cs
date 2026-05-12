@@ -1,20 +1,24 @@
 ﻿using System.Windows.Forms;
 using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
 
-public partial class PendantControl : UserControl, IUserControl
+public partial class PendantControl : UserControl, IUserControl, ISelectableControl<IRobotControl>
 {
     YaskawaRobot _robot;
 
+    public IRobotControl SelectedProtocol { get; set; }
+    public YaskawaRobot Robot { get => _robot; set => _robot = value; }
 
     public PendantControl(YaskawaRobot Yaskawa)
     {
         _robot = Yaskawa;
         InitializeComponent();
+        protocolSelector.Initialize(this);
     }
 
     #region IUserControl
-    public bool FeatureEnabled => _robot.HighSpeedEServer.Connected;
+    public bool FeatureEnabled => SelectedProtocol?.Connected ?? false;
 
     public string Title => "Teach Pendant";
 
@@ -35,16 +39,16 @@ public partial class PendantControl : UserControl, IUserControl
 
     private void btnPopup_Click(object sender, System.EventArgs e)
     {
-        _robot.HighSpeedEServer.Display(txtMessage.Text);
+        SelectedProtocol.Display(txtMessage.Text);
     }
 
     private void btnLock_Click(object sender, System.EventArgs e)
     {
-        _robot.HighSpeedEServer.ServoCommand(OnOffCommandType.HLock, true);
+        SelectedProtocol.SetTeachPendantLockState(true);
     }
 
     private void btnUnlock_Click(object sender, System.EventArgs e)
     {
-        _robot.HighSpeedEServer.ServoCommand(OnOffCommandType.HLock, false);
+        SelectedProtocol.SetTeachPendantLockState(false);
     }
 }

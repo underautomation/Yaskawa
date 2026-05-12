@@ -38,6 +38,7 @@ partial class IoControl
         nudCount = new NumericUpDown();
         gridName = new PropertyGrid();
         label3 = new Label();
+        protocolSelector = new ProtocolSelector();
         ((System.ComponentModel.ISupportInitialize)nudGroup).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudCount).BeginInit();
         SuspendLayout();
@@ -149,8 +150,17 @@ partial class IoControl
         label3.Text = "Only network input can be written";
         label3.TextAlign = ContentAlignment.MiddleCenter;
         // 
+        // protocolSelector
+        // 
+        protocolSelector.Dock = DockStyle.Top;
+        protocolSelector.Location = new Point(0, 0);
+        protocolSelector.Name = "protocolSelector";
+        protocolSelector.Size = new Size(617, 30);
+        protocolSelector.TabIndex = 28;
+        // 
         // IoControl
         // 
+        Controls.Add(protocolSelector);
         Controls.Add(label3);
         Controls.Add(nudCount);
         Controls.Add(label4);
@@ -163,7 +173,7 @@ partial class IoControl
         Controls.Add(gridName);
         Controls.Add(grid);
         Name = "IoControl";
-        Size = new Size(600, 556);
+        Size = new Size(617, 611);
         ((System.ComponentModel.ISupportInitialize)nudGroup).EndInit();
         ((System.ComponentModel.ISupportInitialize)nudCount).EndInit();
         ResumeLayout(false);
@@ -182,4 +192,5 @@ partial class IoControl
     private NumericUpDown nudCount;
     private PropertyGrid gridName;
     private Label label3;
+    private ProtocolSelector protocolSelector;
 }

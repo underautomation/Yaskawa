@@ -1,18 +1,23 @@
 ﻿using UnderAutomation.Yaskawa;
+using UnderAutomation.Yaskawa.Common;
 using UnderAutomation.Yaskawa.HighSpeedEServer;
 
-public partial class FileControl : UserControl, IUserControl
+public partial class FileControl : UserControl, IUserControl, ISelectableControl<IFileReader>
 {
     YaskawaRobot _robot;
+
+    public IFileReader SelectedProtocol { get; set; }
+    public YaskawaRobot Robot { get => _robot; set => _robot = value; }
 
     public FileControl(YaskawaRobot Yaskawa)
     {
         _robot = Yaskawa;
         InitializeComponent();
+        protocolSelector.Initialize(this);
     }
 
     #region IUserControl
-    public bool FeatureEnabled => _robot.HighSpeedEServer.Connected;
+    public bool FeatureEnabled => SelectedProtocol?.Connected ?? false;
 
     public string Title => "Files";
 
@@ -32,13 +37,13 @@ public partial class FileControl : UserControl, IUserControl
 
             lstFolder.Items.Clear();
 
-            if (!_robot.HighSpeedEServer.Connected) return;
+            if (!FeatureEnabled) return;
 
-            var files = _robot.HighSpeedEServer.GetFileList(cbPattern.Text);
+            var files = SelectedProtocol.GetFileList(cbPattern.Text);
 
             ListViewItem selectedItem = null;
 
-            foreach (var file in files.Files)
+            foreach (var file in files)
             {
                 var itm = lstFolder.Items.Add(file);
                 itm.ImageKey = "file";
@@ -60,7 +65,12 @@ public partial class FileControl : UserControl, IUserControl
 
     public void PeriodicUpdate()
     {
-
+        var isWriter = SelectedProtocol is IFileWriter;
+        btnUpload.Enabled = isWriter;
+        btnDelete.Enabled = isWriter;
+        var isHses = SelectedProtocol == Robot.HighSpeedEServer;
+        btnBackup.Enabled = isHses;
+        btnDownloadCmos.Enabled = isHses && btnDownloadCmos.Enabled;
     }
     #endregion
 
@@ -72,16 +82,14 @@ public partial class FileControl : UserControl, IUserControl
 
         var fileName = Path.GetFileName(dlgOpen.FileName);
 
+        var writer = SelectedProtocol as IFileWriter;
+        if (writer is null) return;
+
         try
         {
             Cursor = Cursors.WaitCursor;
 
-            _robot.HighSpeedEServer.LoadFile(fileName, content, (progress) =>
-            {
-                lblProgress.Visible = true;
-                lblProgress.Text = $"Sending {progress.FileName} ...\r\nSent bytes : {progress.LoadedBytes} out of {progress.TotalBytes}";
-                Application.DoEvents();
-            });
+            writer.LoadFile(fileName, content);
 
             UpdateList(fileName);
         }
@@ -107,7 +115,8 @@ public partial class FileControl : UserControl, IUserControl
             return;
         }
 
-        _robot.HighSpeedEServer.DeleteFile(file);
+        var writer = SelectedProtocol as IFileWriter;
+        writer?.DeleteFile(file);
 
         UpdateList();
     }
@@ -132,14 +141,9 @@ public partial class FileControl : UserControl, IUserControl
             Cursor = Cursors.WaitCursor;
 
 
-            var content = _robot.HighSpeedEServer.GetFile(file, (progress) =>
-            {
-                lblProgress.Visible = true;
-                lblProgress.Text = $"Downloading {progress.FileName} ...\r\nReceived bytes : {progress.DownloadedBytes}";
-                Application.DoEvents();
-            });
+            var content = SelectedProtocol.GetFile(file);
 
-            var frm = new FileControlPopup(content.FileName, content.Content, _robot, showSaveDialog);
+            var frm = new FileControlPopup(file, content, _robot, showSaveDialog);
             frm.ShowDialog();
         }
         finally
@@ -166,7 +170,7 @@ public partial class FileControl : UserControl, IUserControl
 
     private void btnBackup_Click(object sender, EventArgs e)
     {
-        _robot.HighSpeedEServer.BatchDataBackup();
+        Robot.HighSpeedEServer.BatchDataBackup();
         btnDownloadCmos.Enabled = true;
     }
 
@@ -176,8 +180,7 @@ public partial class FileControl : UserControl, IUserControl
         {
             Cursor = Cursors.WaitCursor;
 
-
-            var content = _robot.HighSpeedEServer.GetFile("/SPDRV/CMOSBK.BIN", (progress) =>
+            var content = Robot.HighSpeedEServer.GetFile("/SPDRV/CMOSBK.BIN", (progress) =>
             {
                 lblProgress.Visible = true;
                 lblProgress.Text = $"Downloading CMOS.BIN ...\r\nReceived bytes : {progress.DownloadedBytes}";

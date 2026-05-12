@@ -27,62 +27,71 @@ partial class PendantControl
     /// </summary>
     private void InitializeComponent()
     {
-            this.txtMessage = new System.Windows.Forms.TextBox();
-            this.btnPopup = new System.Windows.Forms.Button();
-            this.btnLock = new System.Windows.Forms.Button();
-            this.btnUnlock = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // txtMessage
-            // 
-            this.txtMessage.Location = new System.Drawing.Point(12, 16);
-            this.txtMessage.Multiline = true;
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(350, 150);
-            this.txtMessage.TabIndex = 12;
-            this.txtMessage.Text = "This is a message to display on pendant !";
-            // 
-            // btnPopup
-            // 
-            this.btnPopup.Location = new System.Drawing.Point(12, 181);
-            this.btnPopup.Name = "btnPopup";
-            this.btnPopup.Size = new System.Drawing.Size(350, 35);
-            this.btnPopup.TabIndex = 11;
-            this.btnPopup.Text = "Display message";
-            this.btnPopup.UseVisualStyleBackColor = true;
-            this.btnPopup.Click += new System.EventHandler(this.btnPopup_Click);
-            // 
-            // btnLock
-            // 
-            this.btnLock.Location = new System.Drawing.Point(396, 44);
-            this.btnLock.Name = "btnLock";
-            this.btnLock.Size = new System.Drawing.Size(130, 35);
-            this.btnLock.TabIndex = 11;
-            this.btnLock.Text = "Lock pendant";
-            this.btnLock.UseVisualStyleBackColor = true;
-            this.btnLock.Click += new System.EventHandler(this.btnLock_Click);
-            // 
-            // btnUnlock
-            // 
-            this.btnUnlock.Location = new System.Drawing.Point(396, 95);
-            this.btnUnlock.Name = "btnUnlock";
-            this.btnUnlock.Size = new System.Drawing.Size(130, 35);
-            this.btnUnlock.TabIndex = 11;
-            this.btnUnlock.Text = "Unlock pendant";
-            this.btnUnlock.UseVisualStyleBackColor = true;
-            this.btnUnlock.Click += new System.EventHandler(this.btnUnlock_Click);
-            // 
-            // PendantControl
-            // 
-            this.Controls.Add(this.txtMessage);
-            this.Controls.Add(this.btnPopup);
-            this.Controls.Add(this.btnUnlock);
-            this.Controls.Add(this.btnLock);
-            this.Name = "PendantControl";
-            this.Size = new System.Drawing.Size(593, 418);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+        txtMessage = new TextBox();
+        btnPopup = new Button();
+        btnLock = new Button();
+        btnUnlock = new Button();
+        protocolSelector = new ProtocolSelector();
+        SuspendLayout();
+        // 
+        // txtMessage
+        // 
+        txtMessage.Location = new Point(16, 54);
+        txtMessage.Multiline = true;
+        txtMessage.Name = "txtMessage";
+        txtMessage.Size = new Size(350, 150);
+        txtMessage.TabIndex = 12;
+        txtMessage.Text = "This is a message to display on pendant !";
+        // 
+        // btnPopup
+        // 
+        btnPopup.Location = new Point(16, 219);
+        btnPopup.Name = "btnPopup";
+        btnPopup.Size = new Size(350, 35);
+        btnPopup.TabIndex = 11;
+        btnPopup.Text = "Display message";
+        btnPopup.UseVisualStyleBackColor = true;
+        btnPopup.Click += btnPopup_Click;
+        // 
+        // btnLock
+        // 
+        btnLock.Location = new Point(400, 82);
+        btnLock.Name = "btnLock";
+        btnLock.Size = new Size(130, 35);
+        btnLock.TabIndex = 11;
+        btnLock.Text = "Lock pendant";
+        btnLock.UseVisualStyleBackColor = true;
+        btnLock.Click += btnLock_Click;
+        // 
+        // btnUnlock
+        // 
+        btnUnlock.Location = new Point(400, 133);
+        btnUnlock.Name = "btnUnlock";
+        btnUnlock.Size = new Size(130, 35);
+        btnUnlock.TabIndex = 11;
+        btnUnlock.Text = "Unlock pendant";
+        btnUnlock.UseVisualStyleBackColor = true;
+        btnUnlock.Click += btnUnlock_Click;
+        // 
+        // protocolSelector
+        // 
+        protocolSelector.Dock = DockStyle.Top;
+        protocolSelector.Location = new Point(0, 0);
+        protocolSelector.Name = "protocolSelector";
+        protocolSelector.Size = new Size(593, 30);
+        protocolSelector.TabIndex = 12;
+        // 
+        // PendantControl
+        // 
+        Controls.Add(protocolSelector);
+        Controls.Add(txtMessage);
+        Controls.Add(btnPopup);
+        Controls.Add(btnUnlock);
+        Controls.Add(btnLock);
+        Name = "PendantControl";
+        Size = new Size(593, 418);
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
@@ -91,4 +100,5 @@ partial class PendantControl
     private System.Windows.Forms.Button btnPopup;
     private System.Windows.Forms.Button btnLock;
     private System.Windows.Forms.Button btnUnlock;
+    private ProtocolSelector protocolSelector;
 }

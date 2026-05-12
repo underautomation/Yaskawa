@@ -65,6 +65,7 @@ partial class MoveControl
         btnStop = new Button();
         panel1 = new Panel();
         panel2 = new Panel();
+        protocolSelector = new ProtocolSelector();
         ((System.ComponentModel.ISupportInitialize)nudSpeedJoint).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudX).BeginInit();
         ((System.ComponentModel.ISupportInitialize)nudY).BeginInit();
@@ -369,7 +370,7 @@ partial class MoveControl
         // 
         // btnServoOn
         // 
-        btnServoOn.Location = new Point(197, 23);
+        btnServoOn.Location = new Point(195, 36);
         btnServoOn.Margin = new Padding(4, 3, 4, 3);
         btnServoOn.Name = "btnServoOn";
         btnServoOn.Size = new Size(152, 40);
@@ -380,7 +381,7 @@ partial class MoveControl
         // 
         // btnServoOff
         // 
-        btnServoOff.Location = new Point(356, 23);
+        btnServoOff.Location = new Point(354, 36);
         btnServoOff.Margin = new Padding(4, 3, 4, 3);
         btnServoOff.Name = "btnServoOff";
         btnServoOff.Size = new Size(152, 40);
@@ -468,8 +469,17 @@ partial class MoveControl
         panel2.Size = new Size(440, 411);
         panel2.TabIndex = 36;
         // 
+        // protocolSelector
+        // 
+        protocolSelector.Dock = DockStyle.Top;
+        protocolSelector.Location = new Point(0, 0);
+        protocolSelector.Name = "protocolSelector";
+        protocolSelector.Size = new Size(823, 30);
+        protocolSelector.TabIndex = 37;
+        // 
         // MoveControl
         // 
+        Controls.Add(protocolSelector);
         Controls.Add(panel2);
         Controls.Add(panel1);
         Controls.Add(btnStop);
@@ -532,4 +542,5 @@ partial class MoveControl
     private Button btnStop;
     private Panel panel1;
     private Panel panel2;
+    private ProtocolSelector protocolSelector;
 }

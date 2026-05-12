@@ -15,10 +15,21 @@ public partial class ProtocolSelector : UserControl
 
     private Dictionary<string, IYaskawaClient> _protocols;
 
-
-    private void cbProtocol_SelectedValueChanged(object sender, EventArgs e)
+    private void tmrConnected_Tick(object sender, EventArgs e)
     {
+        if (cbProtocol.DroppedDown || _protocols == null) return;
 
+        if (_protocols.TryGetValue(cbProtocol.Text, out IYaskawaClient current) && current.Connected) return;
+
+        foreach (string name in cbProtocol.Items)
+        {
+            if (_protocols.TryGetValue(name, out IYaskawaClient client) && client.Connected)
+            {
+                if (cbProtocol.Text != name)
+                    cbProtocol.Text = name;
+                return;
+            }
+        }
     }
 
     public void Initialize<T>(ISelectableControl<T> control) where T : IYaskawaClient
@@ -28,8 +39,11 @@ public partial class ProtocolSelector : UserControl
             { "Ethernet Server", control.Robot.EServer },
             { "HTTP", control.Robot.Http },
             { "Host Control (Ethernet)", control.Robot.HostControlEthernet },
-            { "Host Control (Serial)", control.Robot.HostControlSerial }
+            { "Host Control (Serial)", control.Robot.HostControlSerial },
+            { "FTP", control.Robot.Ftp }
         };
+
+        cbProtocol.Items.Clear();
 
         foreach (var protocol in _protocols)
         {
@@ -49,4 +63,5 @@ public partial class ProtocolSelector : UserControl
 
         cbProtocol.SelectedIndex = 0;
     }
+
 }
